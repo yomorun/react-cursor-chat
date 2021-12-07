@@ -5,14 +5,13 @@ A react component for cursor chat
 -   Press `/` to bring up the input box
 -   Click to close the input box
 
-## Installation and Usage
-
-#### Using npm
+## Installation 
 
 ```
 $ npm i --save yomo-react-cursor-chat
 ```
 
+## Usage
 ```jsx
 import React from 'react';
 import CursorChat from 'yomo-react-cursor-chat';
@@ -22,7 +21,7 @@ import 'yomo-react-cursor-chat/dist/cursor-chat.min.css';
     socketURL="ws://127.0.0.1:8080"
     sendingTimeInterval={200}
     avatar="https://avatars.githubusercontent.com/u/67308985?s=200&v=4"
-/>;
+/>
 ```
 
 -   `socketURL: string`: to set the WebSocket service address.
@@ -112,40 +111,6 @@ function CursorIcon({ color }: { color: string }) {
         [color]
     );
 }
-```
-
-#### CDN
-
-For CDN, you can use [skypack](https://www.skypack.dev):
-[https://cdn.skypack.dev/yomo-react-cursor-chat](https://cdn.skypack.dev/yomo-react-cursor-chat)
-
-```html
-<head>
-    <style>
-        body {
-            background-color: black;
-        }
-    </style>
-    <link
-        href="https://cdn.skypack.dev/yomo-react-cursor-chat/dist/cursor-chat.min.css"
-        rel="stylesheet"
-    />
-    <script type="module">
-        import React from 'https://cdn.skypack.dev/react';
-        import ReactDOM from 'https://cdn.skypack.dev/react-dom';
-        import CursorChat from 'https://cdn.skypack.dev/yomo-react-cursor-chat';
-        ReactDOM.render(
-            React.createElement(CursorChat, {
-                socketURL: 'wss://ws-dev.yomo.run',
-                sendingTimeInterval: 200,
-                avatar:
-                    'https://avatars.githubusercontent.com/u/67308985?s=200&v=4',
-                theme: 'light',
-            }),
-            document.getElementById('root')
-        );
-    </script>
-</head>
 ```
 
 ## LICENSE

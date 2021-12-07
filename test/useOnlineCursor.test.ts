@@ -28,7 +28,7 @@ describe('unit test for custom hook useOnlineCursor', () => {
             current = result.current;
         });
 
-        const { me, mates } = current;
+        const { me } = current;
 
         expect(me.name).toBe('001');
 
@@ -41,7 +41,5 @@ describe('unit test for custom hook useOnlineCursor', () => {
 
         expect(me.x).toBe(120);
         expect(me.y).toBe(123);
-
-        expect(mates.length).toBe(0);
     });
 });
