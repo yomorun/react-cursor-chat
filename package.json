@@ -1,0 +1,80 @@
+{
+  "name": "yomo-react-cursor-chat",
+  "version": "0.0.1",
+  "description": "A react component for cursor chat",
+  "keywords": [
+    "yomo-js",
+    "YoMo",
+    "yomo-react-cursor-chat",
+    "multiplayer"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "CursorChat": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "author": "osdodo",
+  "module": "dist/yomo-react-cursor-chat.esm.js",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@types/react": "^17.0.34",
+    "@types/react-dom": "^17.0.11",
+    "autoprefixer": "^10.4.0",
+    "cssnano": "^5.0.10",
+    "husky": "^7.0.4",
+    "less": "^4.1.2",
+    "rollup-plugin-postcss": "^4.0.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.4",
+    "whatwg-fetch": "^3.6.2"
+  },
+  "dependencies": {
+    "react": ">=16",
+    "react-dom": "^17.0.2",
+    "rxjs": "^6.6.6",
+    "yomo-js": "^0.1.2"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Android >= 4.4",
+    "iOS >= 9"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yomorun/yomo-react-cursor-chat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yomorun/yomo-react-cursor-chat/issues"
+  },
+  "homepage": "https://github.com/yomorun/yomo-react-cursor-chat#readme"
+}
