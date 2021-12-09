@@ -36,13 +36,13 @@ Or use hooks and customize the components yourself:
 import React, { useMemo } from 'react';
 import { useOnlineCursors, useRenderPosition } from 'yomo-react-cursor-chat';
 
-const MeCursor = ({ cursor, isConnected }) => {
+const MeCursor = ({ cursor }) => {
     const refContainer = useRenderPosition(cursor);
 
     return useMemo(
         () => (
             <div className="cursor" ref={refContainer}>
-                <CursorIcon color={isConnected ? cursor.color : '#aaa'} />
+                <CursorIcon color={cursor.color} />
                 {cursor.name && <div>{cursor.name}</div>}
                 {cursor.avatar && (
                     <img className="avatar" src={cursor.avatar} alt="avatar" />
@@ -53,7 +53,7 @@ const MeCursor = ({ cursor, isConnected }) => {
     );
 };
 
-const MateCursor = ({ cursor, isConnected }) => {
+const MateCursor = ({ cursor }) => {
     const refContainer = useRenderPosition(cursor);
     return <div ref={refContainer}></div>;
 };
@@ -64,7 +64,7 @@ const YourComponent = ({
     avatar,
     sendingTimeInterval = 200,
 }) => {
-    const { me, mates, isConnected } = useOnlineCursor({
+    const {  me, others } = useOnlineCursor({
         socketURL,
         name,
         avatar,
@@ -77,14 +77,13 @@ const YourComponent = ({
 
     return (
         <div>
-            {mates.map(item => (
+            {others.map(item => (
                 <MateCursor
                     key={item.id}
                     cursor={item}
-                    isConnected={isConnected}
                 />
             ))}
-            <MeCursor cursor={me} isConnected={isConnected} />
+            <MeCursor cursor={me} />
         </div>
     );
 };
