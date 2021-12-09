@@ -10,8 +10,7 @@ describe('unit test for custom hook useOnlineCursor', () => {
             me: {
                 name: '',
             },
-            mates: [],
-            isConnected: false,
+            others: []
         };
         await act(async () => {
             const { result } = renderHook(() =>

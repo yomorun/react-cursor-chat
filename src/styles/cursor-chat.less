@@ -2,7 +2,7 @@
     cursor: none;
 }
 
-.yomo-react-cursor-chat-wrapper {
+.online-cursor-wrapper {
     z-index: 99999;
     position: fixed;
     top: 0;
@@ -14,14 +14,14 @@
 
     &__cursor {
         position: absolute;
-        width: 800px;
+        width: 800px;    
     }
 
     &__avatar {
         z-index: 2;
         position: absolute;
         top: 22px;
-        left: 44px;
+        left: 38px;
         width: 32px;
         height: 32px;
         border-radius: 8px;
@@ -31,13 +31,15 @@
         z-index: 1;
         position: absolute;
         top: 12px;
-        left: 40px;
+        left: 32px;
         max-width: 300px;
         min-height: 52px;
         display: flex;
         align-items: center;
         padding: 10px 10px 10px 40px;
         font-size: 16px;
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
         box-sizing: border-box;
         border-radius: 8px;
         word-wrap: break-all;
@@ -47,12 +49,14 @@
         z-index: 1;
         position: absolute;
         top: 12px;
-        left: 40px;
+        left: 32px;
         box-sizing: border-box;
         min-width: 150px;
         height: 52px;
         border-radius: 8px;
         font-size: 16px;
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
 
         > span {
             display: inline-block;
@@ -67,8 +71,6 @@
             position: absolute;
             left: 0;
             top: 0;
-            background-color: inherit;
-            color: inherit;
             font-size: inherit;
             font-family: inherit;
             border-radius: inherit;
@@ -83,15 +85,5 @@
         transition-property: transform;
         transition-timing-function: linear;
         transition-duration: 200ms;
-    }
-
-    .dark {
-        background-color: rgb(0, 0, 0);
-        color: rgb(255, 255, 255);
-    }
-
-    .light {
-        background-color: rgb(255, 255, 255);
-        color: rgb(0, 0, 0);
     }
 }

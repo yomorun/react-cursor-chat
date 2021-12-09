@@ -4,7 +4,7 @@ import { debounceTime } from 'rxjs/operators';
 import useOnlineCursor from './hooks/useOnlineCursor';
 import useRenderPosition from './hooks/useRenderPosition';
 import Me from './cursor/me';
-import Mate from './cursor/mate';
+import Mate from './cursor/others';
 import './styles/cursor-chat.less';
 
 const inputValue$ = new Subject<string>();
@@ -12,12 +12,8 @@ let _showInput = false;
 
 const MeCursor = ({
     cursor,
-    isConnected,
-    theme
 }: {
     cursor: Me;
-    isConnected: boolean;
-    theme?: 'light' | 'dark';
 }) => {
     const refContainer = useRenderPosition(cursor);
     const [showInput, setShowInput] = useState(false);
@@ -66,17 +62,17 @@ const MeCursor = ({
 
     return useMemo(
         () => (
-            <div className="yomo-react-cursor-chat-wrapper__cursor" ref={refContainer}>
-                <CursorIcon color={isConnected ? cursor.color : '#aaa'} />
+            <div className="online-cursor-wrapper__cursor" ref={refContainer}>
+                <CursorIcon color={cursor.color} />
                 {cursor.avatar && (
                     <img
-                        className="yomo-react-cursor-chat-wrapper__avatar"
+                        className="online-cursor-wrapper__avatar"
                         src={cursor.avatar}
                         alt="avatar"
                     />
                 )}
                 {showInput && (
-                    <div className={`yomo-react-cursor-chat-wrapper__input-box ${theme === 'light' ? 'light': 'dark'}`}>
+                    <div className='online-cursor-wrapper__input-box'>
                         <span>{inputValue}</span>
                         <input
                             autoFocus
@@ -88,24 +84,20 @@ const MeCursor = ({
                 )}
             </div>
         ),
-        [isConnected, showInput, inputValue]
+        [showInput, inputValue]
     );
 };
 
 const MateCursor = ({
     cursor,
-    isConnected,
-    theme
 }: {
     cursor: Mate;
-    isConnected: boolean;
-    theme?: 'light' | 'dark';
 }) => {
     const refContainer = useRenderPosition(cursor);
     const [msg, setMsg] = useState(cursor.name);
 
     useEffect(() => {
-        cursor.onMessage = (msg: string) => {
+        cursor.onTextMessage = (msg: string) => {
             setMsg(msg);
         };
     }, []);
@@ -113,40 +105,38 @@ const MateCursor = ({
     return useMemo(
         () => (
             <div
-                className="yomo-react-cursor-chat-wrapper__cursor yomo-react-cursor-chat-wrapper__movement-transition"
+                className="online-cursor-wrapper__cursor online-cursor-wrapper__movement-transition"
                 ref={refContainer}
             >
-                <CursorIcon color={isConnected ? cursor.color : '#aaa'} />
+                <CursorIcon color={cursor.color} />
                 {cursor.avatar && (
                     <img
-                        className="yomo-react-cursor-chat-wrapper__avatar"
+                        className="online-cursor-wrapper__avatar"
                         src={cursor.avatar}
                         alt="avatar"
                     />
                 )}
                 {msg && (
-                    <div className={`yomo-react-cursor-chat-wrapper__text ${theme === 'light' ? 'light': 'dark'}`}>{msg}</div>
+                    <div className="online-cursor-wrapper__text">{msg}</div>
                 )}
             </div>
         ),
-        [isConnected, msg]
+        [msg]
     );
 };
 
-const CursorChat = ({
+const OnlineCursor = ({
     socketURL,
-    sendingTimeInterval,
-    avatar,
     name,
-    theme = 'dark'
+    avatar,
+    sendingTimeInterval,
 }: {
     socketURL: string;
-    sendingTimeInterval?: number;
-    avatar?: string;
     name?: string;
-    theme?: 'light' | 'dark';
+    avatar?: string;
+    sendingTimeInterval?: number;
 }): JSX.Element | null => {
-    const { me, mates, isConnected } = useOnlineCursor({
+    const { me, others } = useOnlineCursor({
         socketURL,
         name,
         avatar,
@@ -158,16 +148,14 @@ const CursorChat = ({
     }
 
     return (
-        <div className="yomo-react-cursor-chat-wrapper">
-            {mates.map(item => (
+        <div className="online-cursor-wrapper">
+            {others.map(item => (
                 <MateCursor
                     key={item.id}
                     cursor={item}
-                    isConnected={isConnected}
-                    theme={theme}
                 />
             ))}
-            <MeCursor cursor={me} isConnected={isConnected} theme={theme}/>
+            <MeCursor cursor={me} />
         </div>
     );
 };
@@ -195,4 +183,4 @@ function CursorIcon({ color }: { color: string }) {
     );
 }
 
-export default memo(CursorChat);
+export default memo(OnlineCursor);

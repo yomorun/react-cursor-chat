@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import Me from '../cursor/me';
-import Mate from '../cursor/mate';
+import Others from '../cursor/others';
 
 import { YoMoClient } from 'yomo-js';
 import { uuidv4 } from '../helper';
-import { MessageContent } from '../types';
-
-const ID = uuidv4();
+import { CursorMessage, OfflineMessage } from '../types';
 
 const useOnlineCursor = ({
     socketURL,
@@ -21,59 +19,12 @@ const useOnlineCursor = ({
     avatar?: string;
 }) => {
     const [me, setMe] = useState<Me | null>(null);
-    const [matesMap, setMatesMap] = useState<Map<string, Mate>>(
-        new Map<string, Mate>()
+    const [othersMap, setOthersMap] = useState<Map<string, Others>>(
+        new Map<string, Others>()
     );
-    const [isConnected, setIsConnected] = useState<boolean>(false);
 
     useEffect(() => {
-        const yomoclient = new YoMoClient<MessageContent>(socketURL, {
-            reconnectInterval: 5000,
-            reconnectAttempts: 5,
-        });
-
-        // `online` event will be occured when user is connected to websocket
-        yomoclient.on('online', data => {
-            if (data.id === ID) {
-                return;
-            }
-            setMatesMap(old => {
-                if (old.has(data.id)) {
-                    return old;
-                }
-                const cursorMap = new Map(old);
-                const mate = new Mate(data);
-                mate.goOnline(yomoclient);
-                cursorMap.set(mate.id, mate);
-                return cursorMap;
-            });
-        });
-
-        yomoclient.on('offline', data => {
-            setMatesMap(old => {
-                const cursorMap = new Map(old);
-                cursorMap.delete(data.id);
-                return cursorMap;
-            });
-        });
-
-        // Answer server query, when other mates go online, server will ask others' states,
-        // this is the response
-        yomoclient.on('sync', data => {
-            if (data.id === ID) {
-                return;
-            }
-            setMatesMap(old => {
-                if (old.has(data.id)) {
-                    return old;
-                }
-                const cursorMap = new Map(old);
-                const mate = new Mate(data);
-                mate.goOnline(yomoclient);
-                cursorMap.set(mate.id, mate);
-                return cursorMap;
-            });
-        });
+        const ID = uuidv4();
 
         const me = new Me({
             id: ID,
@@ -86,30 +37,85 @@ const useOnlineCursor = ({
 
         setMe(me);
 
-        const connectionState = yomoclient.connectionStatus();
-        const connectionSubscription = connectionState.subscribe(
-            (isConnected: boolean) => {
-                setIsConnected(isConnected);
-                if (isConnected) {
-                    me.goOnline(yomoclient);
+        const yomoclient = new YoMoClient(socketURL, {
+            reconnectInterval: 5000,
+            reconnectAttempts: 5,
+        });
+
+        yomoclient.on('connected', () => {
+            const verse = yomoclient.getVerse('001');
+
+            verse.fromServer<CursorMessage>('online').subscribe(data => {
+                if (data.id === ID) {
+                    return;
                 }
-            }
-        );
+                setOthersMap(old => {
+                    if (old.has(data.id)) {
+                        return old;
+                    }
+                    const cursorMap = new Map(old);
+                    const others = new Others(data);
+                    others.goOnline(verse);
+                    cursorMap.set(others.id, others);
+                    return cursorMap;
+                });
+            });
+
+            verse.fromServer<OfflineMessage>('offline').subscribe(data => {
+                setOthersMap(old => {
+                    const cursorMap = new Map(old);
+                    const others = cursorMap.get(data.id);
+                    if (others) {
+                        others.unsubscribe();
+                    }
+                    cursorMap.delete(data.id);
+                    return cursorMap;
+                });
+            });
+
+            // Answer server query, when others others go online, server will ask otherss' states,
+            // this is the response
+            verse.fromServer<CursorMessage>('sync').subscribe(data => {
+                if (data.id === ID) {
+                    return;
+                }
+                setOthersMap(old => {
+                    if (old.has(data.id)) {
+                        return old;
+                    }
+                    const cursorMap = new Map(old);
+                    const others = new Others(data);
+                    others.goOnline(verse);
+                    cursorMap.set(others.id, others);
+                    return cursorMap;
+                });
+            });
+
+            me.goOnline(verse);
+        });
+
+        // yomoclient.on('closed', () => {});
 
         window.onunload = async () => {
             await me.goOffline();
-            connectionSubscription.unsubscribe();
             yomoclient.close();
         };
+
+        // return () => {
+        //     (async () => {
+        //         await me.goOffline();
+        //         yomoclient.close();
+        //     })();
+        // };
     }, []);
 
-    const mates: Mate[] = [];
+    const others: Others[] = [];
 
-    matesMap.forEach(value => {
-        mates.push(value);
+    othersMap.forEach(value => {
+        others.push(value);
     });
 
-    return { me, mates, isConnected };
+    return { me, others };
 };
 
 export default useOnlineCursor;

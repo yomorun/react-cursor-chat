@@ -1,13 +1,14 @@
-import { YoMoClient } from 'yomo-js';
-import { fromEvent, Subscription } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
-import Cursor from '.';
+import { Subscription } from 'rxjs';
+import { map, throttleTime } from 'rxjs/operators';
+import Verse from 'yomo-js/dist/verse';
+import Cursor from './cursor';
 import { getScale } from '../helper';
-import { MessageContent } from '../types';
+import { CursorMessage, MovementMessage, TextMessage, OfflineMessage } from '../types';
 
 export default class Me extends Cursor {
     private sendingTimeInterval: number;
-    private yomoclient: YoMoClient<MessageContent> | undefined;
+    private verse: Verse | undefined;
+    private onlineSubscription: Subscription | undefined;
     private mousePositionSubscription: Subscription | undefined;
 
     constructor({
@@ -29,43 +30,49 @@ export default class Me extends Cursor {
         this.sendingTimeInterval = sendingTimeInterval;
     }
 
-    goOnline(yomoclient: YoMoClient<MessageContent>) {
-        this.yomoclient = yomoclient;
-        this.online(yomoclient);
-        this.subscribeSyncEvent(yomoclient);
+    goOnline(verse: Verse) {
+        this.verse = verse;
+        this.online(verse);
+        this.onlineSubscription = this.subscribeOnline(verse);
         if (this.mousePositionSubscription) {
             this.mousePositionSubscription.unsubscribe();
         }
-        this.mousePositionSubscription = this.subscribeMousePosition(
-            yomoclient
-        );
+        this.mousePositionSubscription = this.subscribeMousePosition(verse);
     }
 
     async goOffline() {
+        if (this.verse) {
+            this.verse.publish<OfflineMessage>('offline', {
+                id: this.id,
+            });
+        }
+
         if (this.mousePositionSubscription) {
             this.mousePositionSubscription.unsubscribe();
             this.mousePositionSubscription = undefined;
         }
 
-        this.yomoclient &&
-            this.yomoclient.emit('offline', {
-                id: this.id,
-            });
+        if (this.onlineSubscription) {
+            this.onlineSubscription.unsubscribe();
+            this.onlineSubscription = undefined;
+        }
+
         return await new Promise(resolve => {
             setTimeout(resolve, 500);
         });
     }
 
     sendMessage(message: string) {
-        this.yomoclient &&
-            this.yomoclient.emit('message', {
+        if (this.verse) {
+            this.verse.publish<TextMessage>('text', {
                 id: this.id,
                 message: message,
             });
+        }
     }
 
-    private online(yomoclient: YoMoClient<MessageContent>) {
-        yomoclient.emit('online', {
+    private online(verse: Verse) {
+        verse.publish<CursorMessage>('online', {
             id: this.id,
             x: 0,
             y: 0,
@@ -74,9 +81,9 @@ export default class Me extends Cursor {
         });
     }
 
-    private subscribeSyncEvent(yomoclient: YoMoClient<MessageContent>) {
-        yomoclient.on('online', () => {
-            yomoclient.emit('sync', {
+    private subscribeOnline(verse: Verse) {
+        return verse.fromServer<any>('online').subscribe(() => {
+            verse.publish<CursorMessage>('sync', {
                 id: this.id,
                 x: this.x,
                 y: this.y,
@@ -86,8 +93,8 @@ export default class Me extends Cursor {
         });
     }
 
-    private subscribeMousePosition(yomoclient: YoMoClient<MessageContent>) {
-        const mousemove$ = fromEvent<MouseEvent>(document, 'mousemove');
+    private subscribeMousePosition(verse: Verse) {
+        const mousemove$ = verse.fromEvent<MouseEvent>(document, 'mousemove');
 
         mousemove$.subscribe(event => {
             const { clientX, clientY } = event;
@@ -95,20 +102,21 @@ export default class Me extends Cursor {
             this.onMove({ mouseX: clientX, mouseY: clientY });
         });
 
-        return mousemove$
-            .pipe(throttleTime(this.sendingTimeInterval))
-            .subscribe(() => {
-                // Broadcast movement event streams to others in this game room
-                this.sendPosition(yomoclient);
-            });
-    }
+        const movement$ = mousemove$.pipe(
+            throttleTime(this.sendingTimeInterval),
+            map(event => {
+                const { scaleX, scaleY } = getScale(
+                    event.clientX,
+                    event.clientY
+                );
+                return {
+                    id: this.id,
+                    x: scaleX,
+                    y: scaleY,
+                };
+            })
+        );
 
-    private sendPosition(yomoclient: YoMoClient<MessageContent>) {
-        const { scaleX, scaleY } = getScale(this.x, this.y);
-        yomoclient.emit('movement', {
-            id: this.id,
-            x: scaleX,
-            y: scaleY,
-        });
+        return verse.bindServer<MovementMessage>(movement$, 'movement');
     }
 }

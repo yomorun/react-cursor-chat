@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
-import Mate from '../cursor/mate';
+import Others from '../cursor/others';
 import Me from '../cursor/me';
 import { MousePosition } from '../types';
 
 
-const useRenderPosition = (cursor: Me | Mate) => {
+const useRenderPosition = (cursor: Me | Others) => {
     const refContainer = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
