@@ -11,8 +11,10 @@ const inputValue$ = new Subject<string>();
 
 const MeCursor = ({
     cursor,
+    theme
 }: {
     cursor: Me;
+    theme?: 'light' | 'dark'
 }) => {
     const refContainer = useRenderPosition(cursor);
     const [showInput, setShowInput] = useState(false);
@@ -65,7 +67,7 @@ const MeCursor = ({
                     />
                 )}
                 {showInput && (
-                    <div className='online-cursor-wrapper__input-box'>
+                    <div className={`online-cursor-wrapper__input-box ${theme === 'light' ? 'light' : 'dark'}`}>
                         <span>{inputValue}</span>
                         <input
                             autoFocus
@@ -83,8 +85,10 @@ const MeCursor = ({
 
 const OthersCursor = ({
     cursor,
+    theme
 }: {
     cursor: Others;
+    theme?: 'light' | 'dark'
 }) => {
     const refContainer = useRenderPosition(cursor);
     const [msg, setMsg] = useState(cursor.name);
@@ -110,7 +114,7 @@ const OthersCursor = ({
                     />
                 )}
                 {msg && (
-                    <div className="online-cursor-wrapper__text">{msg}</div>
+                    <div className={`online-cursor-wrapper__text ${theme === 'light' ? 'light' : 'dark'}`}>{msg}</div>
                 )}
             </div>
         ),
@@ -123,11 +127,13 @@ const CursorChat = ({
     name,
     avatar,
     sendingTimeInterval,
+    theme = 'dark'
 }: {
     socketURL: string;
     name?: string;
     avatar?: string;
     sendingTimeInterval?: number;
+    theme?: 'light' | 'dark'
 }): JSX.Element | null => {
     const { me, others } = useOnlineCursor({
         socketURL,
@@ -146,9 +152,10 @@ const CursorChat = ({
                 <OthersCursor
                     key={item.id}
                     cursor={item}
+                    theme={theme}
                 />
             ))}
-            <MeCursor cursor={me} />
+            <MeCursor cursor={me} theme={theme} />
         </div>
     );
 };
