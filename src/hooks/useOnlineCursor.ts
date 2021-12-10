@@ -97,11 +97,16 @@ const useOnlineCursor = ({
 
         // yomoclient.on('closed', () => {});
 
+        const clear = async () => {
+            await me.goOffline();
+            yomoclient.close();
+        };
+
+        window.addEventListener('unload', clear);
+
         return () => {
-            (async () => {
-                await me.goOffline();
-                yomoclient.close();
-            })();
+            clear();
+            window.removeEventListener('unload', clear);
         };
     }, []);
 
