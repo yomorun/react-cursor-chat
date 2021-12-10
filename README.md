@@ -3,15 +3,16 @@
 A react component for cursor chat
 
 -   Press `/` to bring up the input box
--   Click to close the input box
+-   Press `ESC` to close the input box
 
-## Installation 
+## Installation
 
 ```
 $ npm i --save yomo-react-cursor-chat
 ```
 
 ## Usage
+
 ```jsx
 import React from 'react';
 import CursorChat from 'yomo-react-cursor-chat';
@@ -21,7 +22,7 @@ import 'yomo-react-cursor-chat/dist/cursor-chat.min.css';
     socketURL="ws://127.0.0.1:8080"
     sendingTimeInterval={200}
     avatar="https://avatars.githubusercontent.com/u/67308985?s=200&v=4"
-/>
+/>;
 ```
 
 -   `socketURL: string`: to set the WebSocket service address.
@@ -53,7 +54,7 @@ const MeCursor = ({ cursor }) => {
     );
 };
 
-const MateCursor = ({ cursor }) => {
+const OthersCursor = ({ cursor }) => {
     const refContainer = useRenderPosition(cursor);
     return <div ref={refContainer}></div>;
 };
@@ -64,7 +65,7 @@ const YourComponent = ({
     avatar,
     sendingTimeInterval = 200,
 }) => {
-    const {  me, others } = useOnlineCursor({
+    const { me, others } = useOnlineCursor({
         socketURL,
         name,
         avatar,
@@ -78,10 +79,7 @@ const YourComponent = ({
     return (
         <div>
             {others.map(item => (
-                <MateCursor
-                    key={item.id}
-                    cursor={item}
-                />
+                <OthersCursor key={item.id} cursor={item} />
             ))}
             <MeCursor cursor={me} />
         </div>

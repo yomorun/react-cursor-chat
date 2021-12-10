@@ -1,10 +1,9 @@
 import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import Verse from 'yomo-js/dist/verse';
 import Cursor from './cursor';
 import { getMousePosition } from '../helper';
 import { MovementMessage, TextMessage } from '../types';
-
-
 export default class Others extends Cursor {
     private textMessageSubscription: Subscription | undefined;
     private movementMessageSubscription: Subscription | undefined;
@@ -45,21 +44,24 @@ export default class Others extends Cursor {
     onTextMessage(_message: string) {}
 
     private subscribeTextMessage(verse: Verse) {
-        return verse.fromServer<TextMessage>('text').subscribe(data => {
-            if (data.id === this.id) {
+        return verse
+            .fromServer<TextMessage>('text')
+            .pipe(filter(data => data.id === this.id))
+            .subscribe(data => {
                 this.onTextMessage(data.message);
-            }
-        });
+            });
     }
 
     private movement(verse: Verse) {
-        return verse.fromServer<MovementMessage>('movement').subscribe(data => {
-            if (data.id !== this.id) {
-                return;
-            }
-            const { mouseX, mouseY } = getMousePosition(data.x, data.y);
-            super.move(mouseX, mouseY);
-            this.onMove({ mouseX, mouseY });
-        });
+        return verse
+            .fromServer<MovementMessage>('movement')
+            .pipe(
+                filter(data => data.id === this.id),
+                map(data => getMousePosition(data.x, data.y))
+            )
+            .subscribe(({ mouseX, mouseY }) => {
+                super.move(mouseX, mouseY);
+                this.onMove({ mouseX, mouseY });
+            });
     }
 }

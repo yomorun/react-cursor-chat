@@ -5,13 +5,17 @@ import CursorChat from '../.';
 import '../dist/cursor-chat.min.css'
 
 const App = () => {
+    const [online, setOnline] = React.useState(true)
     return (
-        <CursorChat
-            socketURL="wss://ws-dev.yomo.run"
-            sendingTimeInterval={200}
-            avatar="https://avatars.githubusercontent.com/u/67308985?s=200&v=4"
-            theme="light"   
-        />
+        <div>
+            <div onClick={() => { setOnline(false) }} style={{ color: '#fff' }}>Go offline</div>
+            {online && <CursorChat
+                socketURL="wss://ws-dev.yomo.run"
+                sendingTimeInterval={200}
+                avatar="https://avatars.githubusercontent.com/u/67308985?s=200&v=4"
+                theme="light"
+            />}
+        </div>
     );
 };
 

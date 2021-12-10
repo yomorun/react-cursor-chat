@@ -4,11 +4,10 @@ import { debounceTime } from 'rxjs/operators';
 import useOnlineCursor from './hooks/useOnlineCursor';
 import useRenderPosition from './hooks/useRenderPosition';
 import Me from './cursor/me';
-import Mate from './cursor/others';
+import Others from './cursor/others';
 import './styles/cursor-chat.less';
 
 const inputValue$ = new Subject<string>();
-let _showInput = false;
 
 const MeCursor = ({
     cursor,
@@ -22,16 +21,12 @@ const MeCursor = ({
     const onKeydown = useCallback(e => {
         if (e.code === 'Slash') {
             setShowInput(true);
-            _showInput = true;
         }
-    }, []);
 
-    const onClick = useCallback(() => {
-        if (_showInput) {
+        if (e.code === 'Escape') {
             setShowInput(false);
             setInputValue('');
             inputValue$.next('');
-            _showInput = false;
         }
     }, []);
 
@@ -45,18 +40,16 @@ const MeCursor = ({
     }, []);
 
     useEffect(() => {
-        inputValue$.pipe(debounceTime(200)).subscribe(inputValue => {
+        inputValue$.pipe(debounceTime(100)).subscribe(inputValue => {
             cursor.sendMessage(inputValue);
         });
     }, []);
 
     useEffect(() => {
         document.addEventListener('keydown', onKeydown);
-        document.addEventListener('click', onClick);
 
         return () => {
             document.removeEventListener('keydown', onKeydown);
-            document.removeEventListener('click', onClick);
         };
     }, []);
 
@@ -88,10 +81,10 @@ const MeCursor = ({
     );
 };
 
-const MateCursor = ({
+const OthersCursor = ({
     cursor,
 }: {
-    cursor: Mate;
+    cursor: Others;
 }) => {
     const refContainer = useRenderPosition(cursor);
     const [msg, setMsg] = useState(cursor.name);
@@ -125,7 +118,7 @@ const MateCursor = ({
     );
 };
 
-const OnlineCursor = ({
+const CursorChat = ({
     socketURL,
     name,
     avatar,
@@ -150,7 +143,7 @@ const OnlineCursor = ({
     return (
         <div className="online-cursor-wrapper">
             {others.map(item => (
-                <MateCursor
+                <OthersCursor
                     key={item.id}
                     cursor={item}
                 />
@@ -183,4 +176,4 @@ function CursorIcon({ color }: { color: string }) {
     );
 }
 
-export default memo(OnlineCursor);
+export default memo(CursorChat);

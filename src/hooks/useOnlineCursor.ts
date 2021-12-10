@@ -6,6 +6,7 @@ import Others from '../cursor/others';
 import { YoMoClient } from 'yomo-js';
 import { uuidv4 } from '../helper';
 import { CursorMessage, OfflineMessage } from '../types';
+import { filter } from 'rxjs/operators';
 
 const useOnlineCursor = ({
     socketURL,
@@ -45,21 +46,21 @@ const useOnlineCursor = ({
         yomoclient.on('connected', () => {
             const verse = yomoclient.getVerse('001');
 
-            verse.fromServer<CursorMessage>('online').subscribe(data => {
-                if (data.id === ID) {
-                    return;
-                }
-                setOthersMap(old => {
-                    if (old.has(data.id)) {
-                        return old;
-                    }
-                    const cursorMap = new Map(old);
-                    const others = new Others(data);
-                    others.goOnline(verse);
-                    cursorMap.set(others.id, others);
-                    return cursorMap;
+            verse
+                .fromServer<CursorMessage>('online')
+                .pipe(filter(data => data.id !== ID))
+                .subscribe(data => {
+                    setOthersMap(old => {
+                        if (old.has(data.id)) {
+                            return old;
+                        }
+                        const cursorMap = new Map(old);
+                        const others = new Others(data);
+                        others.goOnline(verse);
+                        cursorMap.set(others.id, others);
+                        return cursorMap;
+                    });
                 });
-            });
 
             verse.fromServer<OfflineMessage>('offline').subscribe(data => {
                 setOthersMap(old => {
@@ -75,38 +76,33 @@ const useOnlineCursor = ({
 
             // Answer server query, when others others go online, server will ask otherss' states,
             // this is the response
-            verse.fromServer<CursorMessage>('sync').subscribe(data => {
-                if (data.id === ID) {
-                    return;
-                }
-                setOthersMap(old => {
-                    if (old.has(data.id)) {
-                        return old;
-                    }
-                    const cursorMap = new Map(old);
-                    const others = new Others(data);
-                    others.goOnline(verse);
-                    cursorMap.set(others.id, others);
-                    return cursorMap;
+            verse
+                .fromServer<CursorMessage>('sync')
+                .pipe(filter(data => data.id !== ID))
+                .subscribe(data => {
+                    setOthersMap(old => {
+                        if (old.has(data.id)) {
+                            return old;
+                        }
+                        const cursorMap = new Map(old);
+                        const others = new Others(data);
+                        others.goOnline(verse);
+                        cursorMap.set(others.id, others);
+                        return cursorMap;
+                    });
                 });
-            });
 
             me.goOnline(verse);
         });
 
         // yomoclient.on('closed', () => {});
 
-        window.onunload = async () => {
-            await me.goOffline();
-            yomoclient.close();
+        return () => {
+            (async () => {
+                await me.goOffline();
+                yomoclient.close();
+            })();
         };
-
-        // return () => {
-        //     (async () => {
-        //         await me.goOffline();
-        //         yomoclient.close();
-        //     })();
-        // };
     }, []);
 
     const others: Others[] = [];
