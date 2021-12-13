@@ -35,7 +35,7 @@ Or use hooks and customize the components yourself:
 
 ```tsx
 import React, { useMemo } from 'react';
-import { useOnlineCursors, useRenderPosition } from 'yomo-react-cursor-chat';
+import { useOnlineCursor, useRenderPosition } from 'yomo-react-cursor-chat';
 
 const MeCursor = ({ cursor }) => {
     const refContainer = useRenderPosition(cursor);
@@ -50,7 +50,7 @@ const MeCursor = ({ cursor }) => {
                 )}
             </div>
         ),
-        [isConnected]
+        []
     );
 };
 
