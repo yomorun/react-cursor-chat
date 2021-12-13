@@ -59,7 +59,7 @@ const MeCursor = ({ cursor }) => {
 const OthersCursor = ({ cursor }) => {
     const refContainer = useRenderPosition(cursor);
     return (
-        <div ref={refContainer}>
+        <div ref={refContainer} className="cursor">
             <CursorIcon color={cursor.color} />
         </div>
     );
