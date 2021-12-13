@@ -37,6 +37,7 @@ Or use hooks and customize the components yourself:
 import React, { useMemo } from 'react';
 import { useOnlineCursor, useRenderPosition } from 'yomo-react-cursor-chat';
 
+// You can customise the content of your own mouse block
 const MeCursor = ({ cursor }) => {
     const refContainer = useRenderPosition(cursor);
 
@@ -54,12 +55,18 @@ const MeCursor = ({ cursor }) => {
     );
 };
 
+// You can customise what other people's mouse blocks can display
 const OthersCursor = ({ cursor }) => {
     const refContainer = useRenderPosition(cursor);
-    return <div ref={refContainer}></div>;
+    return (
+        <div ref={refContainer}>
+            <CursorIcon color={cursor.color} />
+        </div>
+    );
 };
 
-const YourComponent = ({
+// Exporting your custom components
+export const YourComponent = ({
     socketURL,
     name,
     avatar,
@@ -77,7 +84,7 @@ const YourComponent = ({
     }
 
     return (
-        <div>
+        <div className="container">
             {others.map(item => (
                 <OthersCursor key={item.id} cursor={item} />
             ))}
@@ -86,7 +93,7 @@ const YourComponent = ({
     );
 };
 
-function CursorIcon({ color }: { color: string }) {
+function CursorIcon({ color }) {
     return useMemo(
         () => (
             <svg
