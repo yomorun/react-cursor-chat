@@ -1,11 +1,11 @@
 {
   "name": "yomo-react-cursor-chat",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A react component for cursor chat",
   "keywords": [
-    "yomo-js",
+    "CursorChat",
+    "@yomo/presencejs",
     "YoMo",
-    "yomo-react-cursor-chat",
     "multiplayer"
   ],
   "license": "MIT",
@@ -59,10 +59,10 @@
     "whatwg-fetch": "^3.6.2"
   },
   "dependencies": {
+    "@yomo/presencejs": "^0.0.3",
     "react": ">=16",
     "react-dom": "^17.0.2",
-    "rxjs": "^6.6.6",
-    "yomo-js": "^0.1.5"
+    "rxjs": "^6.6.6"
   },
   "browserslist": [
     "last 2 versions",

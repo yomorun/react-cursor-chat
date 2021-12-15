@@ -5,24 +5,25 @@ A react component for cursor chat
 -   Press `/` to bring up the input box
 -   Press `ESC` to close the input box
 
-## Installation
+### Installation
 
 ```
 $ npm i --save yomo-react-cursor-chat
 ```
 
-## Usage
+### Usage
 
 ```jsx
 import React from 'react';
 import CursorChat from 'yomo-react-cursor-chat';
 import 'yomo-react-cursor-chat/dist/cursor-chat.min.css';
 
+// `wss://ws-dev.yomo.run` is YoMo's demo service
 <CursorChat
-    socketURL="ws://127.0.0.1:8080"
+    socketURL="wss://ws-dev.yomo.run"
     sendingTimeInterval={200}
     avatar="https://avatars.githubusercontent.com/u/67308985?s=200&v=4"
-/>;
+/>
 ```
 
 -   `socketURL: string`: to set the WebSocket service address.
@@ -116,8 +117,11 @@ function CursorIcon({ color }) {
     );
 }
 ```
+### Example
 
-## LICENSE
+[CursorChat](https://github.com/yomorun/yomo-react-cursor-chat-example)
+
+### LICENSE
 
 <a href="/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" />

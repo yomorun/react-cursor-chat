@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import Verse from 'yomo-js/dist/verse';
+import Room from '@yomo/presencejs/dist/room';
 import Cursor from './cursor';
 import { getMousePosition } from '../helper';
 import { MovementMessage, TextMessage } from '../types';
@@ -24,9 +24,9 @@ export default class Others extends Cursor {
         super(id, x, y, name, avatar);
     }
 
-    goOnline(verse: Verse) {
-        this.movementMessageSubscription = this.movement(verse);
-        this.textMessageSubscription = this.subscribeTextMessage(verse);
+    goOnline(room: Room) {
+        this.movementMessageSubscription = this.subscribeMovement(room);
+        this.textMessageSubscription = this.subscribeTextMessage(room);
     }
 
     unsubscribe() {
@@ -43,8 +43,8 @@ export default class Others extends Cursor {
 
     onTextMessage(_message: string) {}
 
-    private subscribeTextMessage(verse: Verse) {
-        return verse
+    private subscribeTextMessage(room: Room) {
+        return room
             .fromServer<TextMessage>('text')
             .pipe(filter(data => data.id === this.id))
             .subscribe(data => {
@@ -52,8 +52,8 @@ export default class Others extends Cursor {
             });
     }
 
-    private movement(verse: Verse) {
-        return verse
+    private subscribeMovement(room: Room) {
+        return room
             .fromServer<MovementMessage>('movement')
             .pipe(
                 filter(data => data.id === this.id),
