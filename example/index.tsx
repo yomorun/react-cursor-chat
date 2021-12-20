@@ -8,7 +8,6 @@ const App = () => {
     return (
         <CursorChat
             socketURL="wss://ws-dev.yomo.run"
-            sendingTimeInterval={200}
             avatar="https://avatars.githubusercontent.com/u/67308985?s=200&v=4"
             theme="light"
         />

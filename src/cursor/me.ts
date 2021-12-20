@@ -11,7 +11,6 @@ import {
 } from '../types';
 
 export default class Me extends Cursor {
-    private sendingTimeInterval: number;
     private room: Room | undefined;
     private onlineSubscription: Subscription | undefined;
     private mousePositionSubscription: Subscription | undefined;
@@ -22,17 +21,14 @@ export default class Me extends Cursor {
         y,
         name = '',
         avatar = '',
-        sendingTimeInterval = 100,
     }: {
         id: string;
         x: number;
         y: number;
         name?: string;
         avatar?: string;
-        sendingTimeInterval?: number;
     }) {
         super(id, x, y, name, avatar);
-        this.sendingTimeInterval = sendingTimeInterval;
     }
 
     goOnline(room: Room) {
@@ -108,7 +104,7 @@ export default class Me extends Cursor {
         });
 
         const movement$ = mousemove$.pipe(
-            throttleTime(this.sendingTimeInterval),
+            throttleTime(16),
             map(event => {
                 const { scaleX, scaleY } = getScale(
                     event.clientX,

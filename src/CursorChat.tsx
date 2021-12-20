@@ -102,7 +102,7 @@ const OthersCursor = ({
     return useMemo(
         () => (
             <div
-                className="online-cursor-wrapper__cursor online-cursor-wrapper__movement-transition"
+                className="online-cursor-wrapper__cursor"
                 ref={refContainer}
             >
                 <CursorIcon color={cursor.color} />
@@ -126,20 +126,17 @@ const CursorChat = ({
     socketURL,
     name,
     avatar,
-    sendingTimeInterval,
     theme = 'dark'
 }: {
     socketURL: string;
     name?: string;
     avatar?: string;
-    sendingTimeInterval?: number;
     theme?: 'light' | 'dark'
 }): JSX.Element | null => {
     const { me, others } = useOnlineCursor({
         socketURL,
         name,
         avatar,
-        sendingTimeInterval,
     });
 
     if (!me) {

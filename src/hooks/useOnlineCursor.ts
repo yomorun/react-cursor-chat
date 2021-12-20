@@ -10,12 +10,10 @@ import { filter } from 'rxjs/operators';
 
 const useOnlineCursor = ({
     socketURL,
-    sendingTimeInterval = 100,
     name,
     avatar,
 }: {
     socketURL: string;
-    sendingTimeInterval?: number;
     name?: string;
     avatar?: string;
 }) => {
@@ -32,8 +30,7 @@ const useOnlineCursor = ({
             x: 0,
             y: 0,
             name: name || '',
-            avatar: avatar || '',
-            sendingTimeInterval: sendingTimeInterval,
+            avatar: avatar || ''
         });
 
         setMe(me);

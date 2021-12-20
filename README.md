@@ -1,4 +1,4 @@
-# yomo-react-cursor-chat
+# react-cursor-chat
 
 A react component for cursor chat
 
@@ -8,26 +8,24 @@ A react component for cursor chat
 ### Installation
 
 ```
-$ npm i --save yomo-react-cursor-chat
+$ npm i --save @yomo/react-cursor-chat
 ```
 
 ### Usage
 
 ```jsx
 import React from 'react';
-import CursorChat from 'yomo-react-cursor-chat';
-import 'yomo-react-cursor-chat/dist/cursor-chat.min.css';
+import CursorChat from '@yomo/react-cursor-chat';
+import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 
 // `wss://ws-dev.yomo.run` is YoMo's demo service
 <CursorChat
     socketURL="wss://ws-dev.yomo.run"
-    sendingTimeInterval={200}
     avatar="https://avatars.githubusercontent.com/u/67308985?s=200&v=4"
 />
 ```
 
 -   `socketURL: string`: to set the WebSocket service address.
--   `sendingTimeInterval?: number`: Default value is 100，Time interval for sending mouse position.
 -   `avatar?: string`: to set avatar.
 -   `name?: string`: to set name.
 -   `theme?: 'light' | 'dark'`: The background color of the chat box, the default value is "dark".
@@ -36,7 +34,7 @@ Or use hooks and customize the components yourself:
 
 ```tsx
 import React, { useMemo } from 'react';
-import { useOnlineCursor, useRenderPosition } from 'yomo-react-cursor-chat';
+import { useOnlineCursor, useRenderPosition } from '@yomo/react-cursor-chat';
 
 // You can customise the content of your own mouse block
 const MeCursor = ({ cursor }) => {
@@ -70,14 +68,12 @@ const OthersCursor = ({ cursor }) => {
 export const YourComponent = ({
     socketURL,
     name,
-    avatar,
-    sendingTimeInterval = 200,
+    avatar
 }) => {
     const { me, others } = useOnlineCursor({
         socketURL,
         name,
         avatar,
-        sendingTimeInterval,
     });
 
     if (!me) {
