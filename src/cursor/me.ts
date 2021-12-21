@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { map, throttleTime } from 'rxjs/operators';
 import Room from '@yomo/presencejs/dist/room';
 import Cursor from './cursor';
@@ -13,6 +13,7 @@ import {
 export default class Me extends Cursor {
     private room: Room | undefined;
     private onlineSubscription: Subscription | undefined;
+    private mousemoveSubscription: Subscription | undefined;
     private mousePositionSubscription: Subscription | undefined;
 
     constructor({
@@ -29,6 +30,7 @@ export default class Me extends Cursor {
         avatar?: string;
     }) {
         super(id, x, y, name, avatar);
+        this.mousemoveSubscription = this.subscribeMousemove();
     }
 
     goOnline(room: Room) {
@@ -46,6 +48,11 @@ export default class Me extends Cursor {
             this.room.publish<OfflineMessage>('offline', {
                 id: this.id,
             });
+        }
+
+        if (this.mousemoveSubscription) {
+            this.mousemoveSubscription.unsubscribe();
+            this.mousemoveSubscription = undefined;
         }
 
         if (this.mousePositionSubscription) {
@@ -94,14 +101,18 @@ export default class Me extends Cursor {
         });
     }
 
-    private subscribeMousePosition(room: Room) {
-        const mousemove$ = room.fromEvent<MouseEvent>(document, 'mousemove');
+    private subscribeMousemove() {
+        const mousemove$ = fromEvent<MouseEvent>(document, 'mousemove');
 
-        mousemove$.subscribe(event => {
+        return mousemove$.subscribe(event => {
             const { clientX, clientY } = event;
             super.move(clientX, clientY);
             this.onMove({ mouseX: clientX, mouseY: clientY });
         });
+    }
+
+    private subscribeMousePosition(room: Room) {
+        const mousemove$ = fromEvent<MouseEvent>(document, 'mousemove');
 
         const movement$ = mousemove$.pipe(
             throttleTime(16),
