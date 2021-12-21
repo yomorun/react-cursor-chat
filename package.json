@@ -1,6 +1,6 @@
 {
   "name": "@yomo/react-cursor-chat",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A react component for cursor chat",
   "keywords": [
     "CursorChat",

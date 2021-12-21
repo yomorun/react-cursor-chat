@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import useOnlineCursor from './hooks/useOnlineCursor';
 import useRenderPosition from './hooks/useRenderPosition';
 import Me from './cursor/me';
 import Others from './cursor/others';
 import './styles/cursor-chat.less';
-
-const inputValue$ = new Subject<string>();
 
 const MeCursor = ({
     cursor,
@@ -28,7 +24,7 @@ const MeCursor = ({
         if (e.code === 'Escape') {
             setShowInput(false);
             setInputValue('');
-            inputValue$.next('');
+            cursor.sendMessage('');
         }
     }, []);
 
@@ -38,13 +34,7 @@ const MeCursor = ({
             return;
         }
         setInputValue(inputValue);
-        inputValue$.next(inputValue);
-    }, []);
-
-    useEffect(() => {
-        inputValue$.pipe(debounceTime(100)).subscribe(inputValue => {
-            cursor.sendMessage(inputValue);
-        });
+        cursor.sendMessage(inputValue);
     }, []);
 
     useEffect(() => {

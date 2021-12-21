@@ -1,5 +1,5 @@
 import { fromEvent, Subscription } from 'rxjs';
-import { map, throttleTime } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import Room from '@yomo/presencejs/dist/room';
 import Cursor from './cursor';
 import { getScale } from '../helper';
@@ -115,7 +115,6 @@ export default class Me extends Cursor {
         const mousemove$ = fromEvent<MouseEvent>(document, 'mousemove');
 
         const movement$ = mousemove$.pipe(
-            throttleTime(16),
             map(event => {
                 const { scaleX, scaleY } = getScale(
                     event.clientX,
