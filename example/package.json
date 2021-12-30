@@ -1,11 +1,11 @@
 {
-  "name": "example",
+  "name": "react-cursor-chat-example",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --no-minify"
   },
   "dependencies": {
     "react-app-polyfill": "^2.0.0"
@@ -20,5 +20,12 @@
     "@types/react-dom": "^16.8.4",
     "parcel": "1.12.3",
     "typescript": "^3.4.5"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }

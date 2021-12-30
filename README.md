@@ -113,9 +113,8 @@ function CursorIcon({ color }) {
     );
 }
 ```
-### Example
 
-[CursorChat](https://github.com/yomorun/yomo-react-cursor-chat-example)
+[Example](https://github.com/osdodo/cursor-chat/example)
 
 ### LICENSE
 
