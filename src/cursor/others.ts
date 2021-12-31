@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import Room from '@yomo/presencejs/dist/room';
+import { Presence } from '@yomo/presencejs';
 import Cursor from './cursor';
 import { getMousePosition } from '../helper';
 import { MovementMessage, TextMessage } from '../types';
@@ -24,9 +24,9 @@ export default class Others extends Cursor {
         super(id, x, y, name, avatar);
     }
 
-    goOnline(room: Room) {
-        this.movementMessageSubscription = this.subscribeMovement(room);
-        this.textMessageSubscription = this.subscribeTextMessage(room);
+    goOnline(yomo: Presence) {
+        this.movementMessageSubscription = this.subscribeMovement(yomo);
+        this.textMessageSubscription = this.subscribeTextMessage(yomo);
     }
 
     unsubscribe() {
@@ -43,18 +43,18 @@ export default class Others extends Cursor {
 
     onTextMessage(_message: string) {}
 
-    private subscribeTextMessage(room: Room) {
-        return room
-            .fromServer<TextMessage>('text')
+    private subscribeTextMessage(yomo: Presence) {
+        return yomo
+            .on$<TextMessage>('text')
             .pipe(filter(data => data.id === this.id))
             .subscribe(data => {
                 this.onTextMessage(data.message);
             });
     }
 
-    private subscribeMovement(room: Room) {
-        return room
-            .fromServer<MovementMessage>('movement')
+    private subscribeMovement(yomo: Presence) {
+        return yomo
+            .on$<MovementMessage>('movement')
             .pipe(
                 filter(data => data.id === this.id),
                 map(data => getMousePosition(data.x, data.y))

@@ -1,17 +1,12 @@
 import { fromEvent, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import Room from '@yomo/presencejs/dist/room';
+import { Presence } from '@yomo/presencejs';
 import Cursor from './cursor';
 import { getScale } from '../helper';
-import {
-    CursorMessage,
-    MovementMessage,
-    TextMessage,
-    OfflineMessage,
-} from '../types';
+import { CursorMessage, TextMessage, OfflineMessage } from '../types';
 
 export default class Me extends Cursor {
-    private room: Room | undefined;
+    private yomo: Presence | undefined;
     private onlineSubscription: Subscription | undefined;
     private mousemoveSubscription: Subscription | undefined;
     private mousePositionSubscription: Subscription | undefined;
@@ -33,19 +28,19 @@ export default class Me extends Cursor {
         this.mousemoveSubscription = this.subscribeMousemove();
     }
 
-    goOnline(room: Room) {
-        this.room = room;
-        this.online(room);
-        this.onlineSubscription = this.subscribeOnline(room);
+    goOnline(yomo: Presence) {
+        this.yomo = yomo;
+        this.online(yomo);
+        this.onlineSubscription = this.subscribeOnline(yomo);
         if (this.mousePositionSubscription) {
             this.mousePositionSubscription.unsubscribe();
         }
-        this.mousePositionSubscription = this.subscribeMousePosition(room);
+        this.mousePositionSubscription = this.subscribeMousePosition(yomo);
     }
 
     async goOffline() {
-        if (this.room) {
-            this.room.publish<OfflineMessage>('offline', {
+        if (this.yomo) {
+            this.yomo.send<OfflineMessage>('offline', {
                 id: this.id,
             });
         }
@@ -71,16 +66,16 @@ export default class Me extends Cursor {
     }
 
     sendMessage(message: string) {
-        if (this.room) {
-            this.room.publish<TextMessage>('text', {
+        if (this.yomo) {
+            this.yomo.send<TextMessage>('text', {
                 id: this.id,
                 message: message,
             });
         }
     }
 
-    private online(room: Room) {
-        room.publish<CursorMessage>('online', {
+    private online(yomo: Presence) {
+        yomo.send<CursorMessage>('online', {
             id: this.id,
             x: 0,
             y: 0,
@@ -89,9 +84,9 @@ export default class Me extends Cursor {
         });
     }
 
-    private subscribeOnline(room: Room) {
-        return room.fromServer<any>('online').subscribe(() => {
-            room.publish<CursorMessage>('sync', {
+    private subscribeOnline(yomo: Presence) {
+        return yomo.on$('online').subscribe(() => {
+            yomo.send<CursorMessage>('sync', {
                 id: this.id,
                 x: this.x,
                 y: this.y,
@@ -111,7 +106,7 @@ export default class Me extends Cursor {
         });
     }
 
-    private subscribeMousePosition(room: Room) {
+    private subscribeMousePosition(yomo: Presence) {
         const mousemove$ = fromEvent<MouseEvent>(document, 'mousemove');
 
         const movement$ = mousemove$.pipe(
@@ -128,6 +123,6 @@ export default class Me extends Cursor {
             })
         );
 
-        return room.bindServer<MovementMessage>(movement$, 'movement');
+        return movement$.subscribe(yomo.ofRoom('001', 'movement'));
     }
 }

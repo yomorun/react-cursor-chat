@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Me from '../cursor/me';
 import Others from '../cursor/others';
 
-import { YoMoClient } from '@yomo/presencejs';
+import { Presence } from '@yomo/presencejs';
 import { uuidv4 } from '../helper';
 import { CursorMessage, OfflineMessage } from '../types';
 import { filter } from 'rxjs/operators';
@@ -30,20 +30,17 @@ const useOnlineCursor = ({
             x: 0,
             y: 0,
             name: name || '',
-            avatar: avatar || ''
+            avatar: avatar || '',
         });
 
         setMe(me);
 
-        const yomoclient = new YoMoClient(socketURL, {
-            reconnectInterval: 5000,
-            reconnectAttempts: 5,
-        });
+        const yomo = new Presence(socketURL);
 
-        yomoclient.on('connected', () => {
-            const room = yomoclient.getRoom('001');
+        yomo.on('connected', () => {
+            yomo.toRoom('001');
 
-            room.fromServer<CursorMessage>('online')
+            yomo.on$<CursorMessage>('online')
                 .pipe(filter(data => data.id !== ID))
                 .subscribe(data => {
                     setOthersMap(old => {
@@ -52,13 +49,13 @@ const useOnlineCursor = ({
                         }
                         const cursorMap = new Map(old);
                         const others = new Others(data);
-                        others.goOnline(room);
+                        others.goOnline(yomo);
                         cursorMap.set(others.id, others);
                         return cursorMap;
                     });
                 });
 
-            room.fromServer<OfflineMessage>('offline').subscribe(data => {
+            yomo.on<OfflineMessage>('offline', data => {
                 setOthersMap(old => {
                     const cursorMap = new Map(old);
                     const others = cursorMap.get(data.id);
@@ -72,7 +69,7 @@ const useOnlineCursor = ({
 
             // Answer server query, when others others go online, server will ask otherss' states,
             // this is the response
-            room.fromServer<CursorMessage>('sync')
+            yomo.on$<CursorMessage>('sync')
                 .pipe(filter(data => data.id !== ID))
                 .subscribe(data => {
                     setOthersMap(old => {
@@ -81,20 +78,20 @@ const useOnlineCursor = ({
                         }
                         const cursorMap = new Map(old);
                         const others = new Others(data);
-                        others.goOnline(room);
+                        others.goOnline(yomo);
                         cursorMap.set(others.id, others);
                         return cursorMap;
                     });
                 });
 
-            me.goOnline(room);
+            me.goOnline(yomo);
         });
 
-        // yomoclient.on('closed', () => {});
+        // yomo.on('closed', () => {});
 
         const clear = async () => {
             await me.goOffline();
-            yomoclient.close();
+            yomo.close();
         };
 
         window.addEventListener('unload', clear);

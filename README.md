@@ -114,8 +114,6 @@ function CursorIcon({ color }) {
 }
 ```
 
-[Example](https://github.com/osdodo/cursor-chat/example)
-
 ### LICENSE
 
 <a href="/LICENSE" target="_blank">
