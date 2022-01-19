@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import useOnlineCursor from './hooks/useOnlineCursor';
 import useRenderPosition from './hooks/useRenderPosition';
+import useLatency from './hooks/useLatency';
 import Me from './cursor/me';
 import Others from './cursor/others';
 import './styles/cursor-chat.less';
@@ -15,6 +16,7 @@ const MeCursor = ({
     const refContainer = useRenderPosition(cursor);
     const [showInput, setShowInput] = useState(false);
     const [inputValue, setInputValue] = useState('');
+    const latencyData = useLatency(cursor);
 
     const onKeydown = useCallback(e => {
         if (e.code === 'Slash') {
@@ -49,6 +51,13 @@ const MeCursor = ({
         () => (
             <div className="online-cursor-wrapper__cursor" ref={refContainer}>
                 <CursorIcon color={cursor.color} />
+                {
+                    latencyData.latency > 0 && (
+                        <div className='online-cursor-wrapper__latency'>
+                            📍 {latencyData.meshId} <span style={{ backgroundColor: latencyData.backgroundColor }}>{latencyData.latency}ms</span>
+                        </div>
+                    )
+                }
                 {cursor.avatar && (
                     <img
                         className="online-cursor-wrapper__avatar"
@@ -69,7 +78,7 @@ const MeCursor = ({
                 )}
             </div>
         ),
-        [showInput, inputValue]
+        [showInput, inputValue, latencyData]
     );
 };
 
@@ -82,6 +91,7 @@ const OthersCursor = ({
 }) => {
     const refContainer = useRenderPosition(cursor);
     const [msg, setMsg] = useState(cursor.name);
+    const latencyData = useLatency(cursor);
 
     useEffect(() => {
         cursor.onTextMessage = (msg: string) => {
@@ -96,6 +106,13 @@ const OthersCursor = ({
                 ref={refContainer}
             >
                 <CursorIcon color={cursor.color} />
+                {
+                    latencyData.latency > 0 && (
+                        <div className='online-cursor-wrapper__latency'>
+                            📍 {latencyData.meshId} <span style={{ backgroundColor: latencyData.backgroundColor }}>{latencyData.latency}ms</span>
+                        </div>
+                    )
+                }
                 {cursor.avatar && (
                     <img
                         className="online-cursor-wrapper__avatar"
@@ -108,23 +125,32 @@ const OthersCursor = ({
                 )}
             </div>
         ),
-        [msg]
+        [msg, latencyData]
     );
 };
 
 const CursorChat = ({
-    socketURL,
+    presenceURL,
+    presenceAuth,
     name,
     avatar,
     theme = 'dark'
 }: {
-    socketURL: string;
+    presenceURL: string;
+    presenceAuth: {
+        type: 'publickey' | 'token';
+        // The public key in your Allegro Mesh project.
+        publicKey?: string;
+        // api for getting access token
+        endpoint?: '/api/auth';
+    },
     name?: string;
     avatar?: string;
     theme?: 'light' | 'dark'
 }): JSX.Element | null => {
     const { me, others } = useOnlineCursor({
-        socketURL,
+        presenceURL,
+        presenceAuth,
         name,
         avatar,
     });

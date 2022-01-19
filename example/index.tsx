@@ -37,7 +37,11 @@ const App = () => {
                 <span>ESC</span> to close the input box
             </p>
             <CursorChat
-                socketURL="wss://x.yomo.dev/presence"
+                presenceURL="wss://presence.yomo.dev"
+                presenceAuth={{
+                    type: 'publickey',
+                    publicKey: 'CursorChat'
+                }}
                 avatar={avatars[`avatar${new Date().getSeconds() % 9}`]}
                 theme="light"
             />

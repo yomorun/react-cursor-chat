@@ -9,11 +9,19 @@ import { CursorMessage, OfflineMessage } from '../types';
 import { filter } from 'rxjs/operators';
 
 const useOnlineCursor = ({
-    socketURL,
+    presenceURL,
+    presenceAuth,
     name,
     avatar,
 }: {
-    socketURL: string;
+    presenceURL: string;
+    presenceAuth: {
+        type: 'publickey' | 'token';
+        // The public key in your Allegro Mesh project.
+        publicKey?: string;
+        // api for getting access token
+        endpoint?: string;
+    };
     name?: string;
     avatar?: string;
 }) => {
@@ -35,7 +43,9 @@ const useOnlineCursor = ({
 
         setMe(me);
 
-        const yomo = new Presence(socketURL);
+        const yomo = new Presence(presenceURL, {
+            auth: presenceAuth,
+        });
 
         yomo.on('connected', () => {
             yomo.toRoom('001');

@@ -25,3 +25,9 @@ export type MousePosition = {
     mouseX: number;
     mouseY: number;
 };
+
+export type Latency = {
+    id: string;
+    meshId: string;
+    latency: number;
+};

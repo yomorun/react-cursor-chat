@@ -1,5 +1,6 @@
+import { Presence } from '@yomo/presencejs';
 import { stringToColor } from '../helper';
-import { MousePosition } from '../types';
+import { Latency, MousePosition } from '../types';
 
 export default class Cursor {
     public id: string;
@@ -30,4 +31,15 @@ export default class Cursor {
     }
 
     onMove(_mousePosition: MousePosition) {}
+
+    onGetLatency(_data: Latency) {}
+
+    subscribeLatency(yomo: Presence) {
+        return yomo.on$<Latency>('latency').subscribe(data => {
+            if (data.id !== this.id) {
+                return;
+            }
+            this.onGetLatency(data);
+        });
+    }
 }

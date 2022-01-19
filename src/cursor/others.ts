@@ -7,6 +7,7 @@ import { MovementMessage, TextMessage } from '../types';
 export default class Others extends Cursor {
     private textMessageSubscription: Subscription | undefined;
     private movementMessageSubscription: Subscription | undefined;
+    private latencySubscription: Subscription | undefined;
 
     constructor({
         id,
@@ -27,6 +28,7 @@ export default class Others extends Cursor {
     goOnline(yomo: Presence) {
         this.movementMessageSubscription = this.subscribeMovement(yomo);
         this.textMessageSubscription = this.subscribeTextMessage(yomo);
+        this.latencySubscription = super.subscribeLatency(yomo);
     }
 
     unsubscribe() {
@@ -38,6 +40,11 @@ export default class Others extends Cursor {
         if (this.movementMessageSubscription) {
             this.movementMessageSubscription.unsubscribe();
             this.movementMessageSubscription = undefined;
+        }
+
+        if (this.latencySubscription) {
+            this.latencySubscription.unsubscribe();
+            this.latencySubscription = undefined;
         }
     }
 

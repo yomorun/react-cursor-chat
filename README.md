@@ -22,10 +22,11 @@ import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 <CursorChat
     socketURL="wss://ws-dev.yomo.run"
     avatar="https://avatars.githubusercontent.com/u/67308985?s=200&v=4"
-/>
+/>;
 ```
 
--   `socketURL: string`: to set the WebSocket service address.
+-   `presenceURL: string`: to set the WebSocket service address.
+-   `presenceAuth: { type: 'publickey' | 'token'; publicKey?: string; endpoint?: '/api/auth'; }`: to set `presence` service Auth
 -   `avatar?: string`: to set avatar.
 -   `name?: string`: to set name.
 -   `theme?: 'light' | 'dark'`: The background color of the chat box, the default value is "dark".
@@ -65,13 +66,10 @@ const OthersCursor = ({ cursor }) => {
 };
 
 // Exporting your custom components
-export const YourComponent = ({
-    socketURL,
-    name,
-    avatar
-}) => {
+export const YourComponent = ({ presenceURL, presenceAuth, name, avatar }) => {
     const { me, others } = useOnlineCursor({
-        socketURL,
+        presenceURL,
+        presenceAuth,
         name,
         avatar,
     });

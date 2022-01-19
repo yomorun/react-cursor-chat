@@ -10,6 +10,7 @@ export default class Me extends Cursor {
     private onlineSubscription: Subscription | undefined;
     private mousemoveSubscription: Subscription | undefined;
     private mousePositionSubscription: Subscription | undefined;
+    private latencySubscription: Subscription | undefined;
 
     constructor({
         id,
@@ -36,6 +37,7 @@ export default class Me extends Cursor {
             this.mousePositionSubscription.unsubscribe();
         }
         this.mousePositionSubscription = this.subscribeMousePosition(yomo);
+        this.latencySubscription = super.subscribeLatency(yomo);
     }
 
     async goOffline() {
@@ -58,6 +60,11 @@ export default class Me extends Cursor {
         if (this.onlineSubscription) {
             this.onlineSubscription.unsubscribe();
             this.onlineSubscription = undefined;
+        }
+
+        if (this.latencySubscription) {
+            this.latencySubscription.unsubscribe();
+            this.latencySubscription = undefined;
         }
 
         return await new Promise(resolve => {
