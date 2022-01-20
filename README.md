@@ -1,9 +1,15 @@
-# react-cursor-chat
+# @yomo/react-cursor-chat
+
+## Introduction
 
 A react component for cursor chat
 
 -   Press `/` to bring up the input box
 -   Press `ESC` to close the input box
+
+![screenshot](screenshot.png)
+
+## Quick Start
 
 ### Installation
 
@@ -11,31 +17,73 @@ A react component for cursor chat
 $ npm i --save @yomo/react-cursor-chat
 ```
 
-### Usage
+#### How do I get a `presenceAuth` token?
+
+If you build your application using next.js, then you can use [API Routes](https://nextjs.org/docs/api-routes/introduction) to get the access token.
+For example, the following API route `pages/api/auth.js` returns a json response with a status code of 200:
+
+```js
+export default async function handler(req, res) {
+    if (req.method === 'GET') {
+        const response = await fetch('https://presence.yomo.dev/api/v1/auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                app_id: process.env.PRESENCE_APP_ID,
+                app_secret: process.env.PRESENCE_APP_SECRET,
+            }),
+        });
+        const data = await response.json();
+        res.status(200).json(data.data);
+    } else {
+        // Handle any other HTTP method
+    }
+}
+```
+
+Response data:
+
+```json
+{
+    "token": "eyJhbGciOiJIUzI1..."
+}
+```
+
+#### Importing the CursorChat component
 
 ```jsx
 import React from 'react';
 import CursorChat from '@yomo/react-cursor-chat';
 import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 
-// `wss://ws-dev.yomo.run` is YoMo's demo service
+// `wss://presence.yomo.dev` is YoMo's demo service
 <CursorChat
-    socketURL="wss://ws-dev.yomo.run"
+    presenceURL="wss://presence.yomo.dev"
+    presenceAuth={{
+        // Certification Type
+        type: 'token',
+        // api for getting access token
+        endpoint: '/api/auth',
+    }}
     avatar="https://avatars.githubusercontent.com/u/67308985?s=200&v=4"
+    theme="light"
 />;
 ```
 
 -   `presenceURL: string`: to set the WebSocket service address.
--   `presenceAuth: { type: 'publickey' | 'token'; publicKey?: string; endpoint?: '/api/auth'; }`: to set `presence` service Auth
+-   `presenceAuth: { type: 'publickey' | 'token'; publicKey?: string; endpoint?: string; }`: to set `presencejs` service Auth
 -   `avatar?: string`: to set avatar.
 -   `name?: string`: to set name.
 -   `theme?: 'light' | 'dark'`: The background color of the chat box, the default value is "dark".
 
-Or use hooks and customize the components yourself:
+#### Or use hooks and customize the components yourself:
 
 ```tsx
 import React, { useMemo } from 'react';
 import { useOnlineCursor, useRenderPosition } from '@yomo/react-cursor-chat';
+import CursorIcon from './CursorIcon';
 
 // You can customise the content of your own mouse block
 const MeCursor = ({ cursor }) => {
@@ -61,12 +109,16 @@ const OthersCursor = ({ cursor }) => {
     return (
         <div ref={refContainer} className="cursor">
             <CursorIcon color={cursor.color} />
+            {cursor.name && <div>{cursor.name}</div>}
+            {cursor.avatar && (
+                <img className="avatar" src={cursor.avatar} alt="avatar" />
+            )}
         </div>
     );
 };
 
 // Exporting your custom components
-export const YourComponent = ({ presenceURL, presenceAuth, name, avatar }) => {
+const YourComponent = ({ presenceURL, presenceAuth, name, avatar }) => {
     const { me, others } = useOnlineCursor({
         presenceURL,
         presenceAuth,
@@ -87,32 +139,9 @@ export const YourComponent = ({ presenceURL, presenceAuth, name, avatar }) => {
         </div>
     );
 };
-
-function CursorIcon({ color }) {
-    return useMemo(
-        () => (
-            <svg
-                shapeRendering="geometricPrecision"
-                xmlns="http://www.w3.org/2000/svg"
-                fill={color}
-            >
-                <path
-                    fill="#666"
-                    d="M9.63 6.9a1 1 0 011.27-1.27l11.25 3.75a1 1 0 010 1.9l-4.68 1.56a1 1 0 00-.63.63l-1.56 4.68a1 1 0 01-1.9 0L9.63 6.9z"
-                />
-                <path
-                    stroke="#fff"
-                    strokeWidth="1.5"
-                    d="M11.13 4.92a1.75 1.75 0 00-2.2 2.21l3.74 11.26a1.75 1.75 0 003.32 0l1.56-4.68a.25.25 0 01.16-.16L22.4 12a1.75 1.75 0 000-3.32L11.13 4.92z"
-                />
-            </svg>
-        ),
-        [color]
-    );
-}
 ```
 
-### LICENSE
+## LICENSE
 
 <a href="/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" />
