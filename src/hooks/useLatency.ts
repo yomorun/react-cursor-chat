@@ -13,10 +13,10 @@ const useLatency = (cursor: Me | Others) => {
         cursor.onGetLatency = data => {
             if (data.latency) {
                 let backgroundColor = 'green';
-                if (data.latency > 100 && data.latency < 200) {
+                if (data.latency >= 200 && data.latency < 300) {
                     backgroundColor = '#FFB02A';
                 }
-                if (data.latency > 300) {
+                if (data.latency >= 300) {
                     backgroundColor = 'red';
                 }
                 setLatencyData({
