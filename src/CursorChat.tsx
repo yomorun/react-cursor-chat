@@ -142,7 +142,7 @@ const CursorChat = ({
         // The public key in your Allegro Mesh project.
         publicKey?: string;
         // api for getting access token
-        endpoint?: '/api/auth';
+        endpoint?: string;
     },
     name?: string;
     avatar?: string;
