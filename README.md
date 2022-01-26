@@ -89,6 +89,7 @@ import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 
 -   `presenceURL: string`: to set the WebSocket service address.
 -   `presenceAuth: { type: 'publickey' | 'token'; publicKey?: string; endpoint?: string; }`: to set `presencejs` service Auth
+-   `room?: string`: to set room.
 -   `avatar?: string`: to set avatar.
 -   `name?: string`: to set name.
 -   `theme?: 'light' | 'dark'`: The background color of the chat box, the default value is "dark".

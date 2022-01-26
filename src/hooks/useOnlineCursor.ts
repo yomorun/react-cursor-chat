@@ -27,7 +27,6 @@ const useOnlineCursor = ({
     name?: string;
     avatar?: string;
 }) => {
-    const [yomo, setYoMo] = useState<Presence | undefined>(undefined);
     const [me, setMe] = useState<Me | null>(null);
     const [othersMap, setOthersMap] = useState<Map<string, Others>>(
         new Map<string, Others>()
@@ -50,9 +49,11 @@ const useOnlineCursor = ({
             auth: presenceAuth,
         });
 
-        setYoMo(yomo);
-
         yomo.on('connected', () => {
+            if (room) {
+                yomo.toRoom(room);
+            }
+
             yomo.on$<CursorMessage>('online')
                 .pipe(filter(data => data.id !== ID))
                 .subscribe(data => {
@@ -102,24 +103,18 @@ const useOnlineCursor = ({
 
         // yomo.on('closed', () => {});
 
-        const clear = async () => {
+        const cleanup = async () => {
             await me.goOffline();
             yomo.close();
         };
 
-        window.addEventListener('unload', clear);
+        window.addEventListener('unload', cleanup);
 
         return () => {
-            clear();
-            window.removeEventListener('unload', clear);
+            cleanup();
+            window.removeEventListener('unload', cleanup);
         };
-    }, []);
-
-    useEffect(() => {
-        if (yomo && room) {
-            yomo.toRoom(room);
-        }
-    }, [yomo, room]);
+    }, [room]);
 
     const others: Others[] = [];
 
