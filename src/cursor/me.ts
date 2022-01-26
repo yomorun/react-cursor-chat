@@ -130,6 +130,8 @@ export default class Me extends Cursor {
             })
         );
 
-        return movement$.subscribe(yomo.ofRoom('001', 'movement'));
+        return movement$.subscribe(data => {
+            yomo.send('movement', data);
+        });
     }
 }

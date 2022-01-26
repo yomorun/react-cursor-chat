@@ -11,6 +11,7 @@ import { filter } from 'rxjs/operators';
 const useOnlineCursor = ({
     presenceURL,
     presenceAuth,
+    room,
     name,
     avatar,
 }: {
@@ -22,9 +23,11 @@ const useOnlineCursor = ({
         // api for getting access token
         endpoint?: string;
     };
+    room?: string;
     name?: string;
     avatar?: string;
 }) => {
+    const [yomo, setYoMo] = useState<Presence | undefined>(undefined);
     const [me, setMe] = useState<Me | null>(null);
     const [othersMap, setOthersMap] = useState<Map<string, Others>>(
         new Map<string, Others>()
@@ -47,9 +50,9 @@ const useOnlineCursor = ({
             auth: presenceAuth,
         });
 
-        yomo.on('connected', () => {
-            yomo.toRoom('001');
+        setYoMo(yomo);
 
+        yomo.on('connected', () => {
             yomo.on$<CursorMessage>('online')
                 .pipe(filter(data => data.id !== ID))
                 .subscribe(data => {
@@ -111,6 +114,12 @@ const useOnlineCursor = ({
             window.removeEventListener('unload', clear);
         };
     }, []);
+
+    useEffect(() => {
+        if (yomo && room) {
+            yomo.toRoom(room);
+        }
+    }, [yomo, room]);
 
     const others: Others[] = [];
 

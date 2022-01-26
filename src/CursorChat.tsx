@@ -8,10 +8,10 @@ import './styles/cursor-chat.less';
 
 const MeCursor = ({
     cursor,
-    theme
+    theme,
 }: {
     cursor: Me;
-    theme?: 'light' | 'dark'
+    theme?: 'light' | 'dark';
 }) => {
     const refContainer = useRenderPosition(cursor);
     const [showInput, setShowInput] = useState(false);
@@ -51,13 +51,18 @@ const MeCursor = ({
         () => (
             <div className="online-cursor-wrapper__cursor" ref={refContainer}>
                 <CursorIcon color={cursor.color} />
-                {
-                    latencyData.latency > 0 && (
-                        <div className='online-cursor-wrapper__latency'>
-                            📍 {latencyData.meshId} <span style={{ backgroundColor: latencyData.backgroundColor }}>{latencyData.latency}ms</span>
-                        </div>
-                    )
-                }
+                {latencyData.latency > 0 && (
+                    <div className="online-cursor-wrapper__latency">
+                        📍 {latencyData.meshId}{' '}
+                        <span
+                            style={{
+                                backgroundColor: latencyData.backgroundColor,
+                            }}
+                        >
+                            {latencyData.latency}ms
+                        </span>
+                    </div>
+                )}
                 {cursor.avatar && (
                     <img
                         className="online-cursor-wrapper__avatar"
@@ -66,7 +71,11 @@ const MeCursor = ({
                     />
                 )}
                 {showInput && (
-                    <div className={`online-cursor-wrapper__input-box ${theme === 'light' ? 'light' : 'dark'}`}>
+                    <div
+                        className={`online-cursor-wrapper__input-box ${
+                            theme === 'light' ? 'light' : 'dark'
+                        }`}
+                    >
                         <span>{inputValue}</span>
                         <input
                             autoFocus
@@ -84,10 +93,10 @@ const MeCursor = ({
 
 const OthersCursor = ({
     cursor,
-    theme
+    theme,
 }: {
     cursor: Others;
-    theme?: 'light' | 'dark'
+    theme?: 'light' | 'dark';
 }) => {
     const refContainer = useRenderPosition(cursor);
     const [msg, setMsg] = useState(cursor.name);
@@ -101,18 +110,20 @@ const OthersCursor = ({
 
     return useMemo(
         () => (
-            <div
-                className="online-cursor-wrapper__cursor"
-                ref={refContainer}
-            >
+            <div className="online-cursor-wrapper__cursor" ref={refContainer}>
                 <CursorIcon color={cursor.color} />
-                {
-                    latencyData.latency > 0 && (
-                        <div className='online-cursor-wrapper__latency'>
-                            📍 {latencyData.meshId} <span style={{ backgroundColor: latencyData.backgroundColor }}>{latencyData.latency}ms</span>
-                        </div>
-                    )
-                }
+                {latencyData.latency > 0 && (
+                    <div className="online-cursor-wrapper__latency">
+                        📍 {latencyData.meshId}{' '}
+                        <span
+                            style={{
+                                backgroundColor: latencyData.backgroundColor,
+                            }}
+                        >
+                            {latencyData.latency}ms
+                        </span>
+                    </div>
+                )}
                 {cursor.avatar && (
                     <img
                         className="online-cursor-wrapper__avatar"
@@ -121,7 +132,13 @@ const OthersCursor = ({
                     />
                 )}
                 {msg && (
-                    <div className={`online-cursor-wrapper__text ${theme === 'light' ? 'light' : 'dark'}`}>{msg}</div>
+                    <div
+                        className={`online-cursor-wrapper__text ${
+                            theme === 'light' ? 'light' : 'dark'
+                        }`}
+                    >
+                        {msg}
+                    </div>
                 )}
             </div>
         ),
@@ -132,9 +149,10 @@ const OthersCursor = ({
 const CursorChat = ({
     presenceURL,
     presenceAuth,
+    room,
     name,
     avatar,
-    theme = 'dark'
+    theme = 'dark',
 }: {
     presenceURL: string;
     presenceAuth: {
@@ -143,14 +161,16 @@ const CursorChat = ({
         publicKey?: string;
         // api for getting access token
         endpoint?: string;
-    },
+    };
+    room?: string;
     name?: string;
     avatar?: string;
-    theme?: 'light' | 'dark'
+    theme?: 'light' | 'dark';
 }): JSX.Element | null => {
     const { me, others } = useOnlineCursor({
         presenceURL,
         presenceAuth,
+        room,
         name,
         avatar,
     });
@@ -162,11 +182,7 @@ const CursorChat = ({
     return (
         <div className="online-cursor-wrapper">
             {others.map(item => (
-                <OthersCursor
-                    key={item.id}
-                    cursor={item}
-                    theme={theme}
-                />
+                <OthersCursor key={item.id} cursor={item} theme={theme} />
             ))}
             <MeCursor cursor={me} theme={theme} />
         </div>
