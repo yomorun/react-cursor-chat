@@ -1,6 +1,6 @@
 {
   "name": "@yomo/react-cursor-chat",
-  "version": "0.0.9",
+  "version": "0.0.12",
   "description": "A react component for cursor chat",
   "keywords": [
     "CursorChat",
@@ -71,10 +71,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/osdodo/cursor-chat.git"
+    "url": "git+https://github.com/yomorun/react-cursor-chat.git"
   },
   "bugs": {
-    "url": "https://github.com/osdodo/cursor-chat/issues"
+    "url": "https://github.com/yomorun/react-cursor-chat/issues"
   },
-  "homepage": "https://github.com/osdodo/cursor-chat#readme"
+  "homepage": "https://github.com/yomorun/react-cursor-chat#readme"
 }

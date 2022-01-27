@@ -11,6 +11,7 @@ import { filter } from 'rxjs/operators';
 const useOnlineCursor = ({
     presenceURL,
     presenceAuth,
+    room,
     name,
     avatar,
 }: {
@@ -22,6 +23,7 @@ const useOnlineCursor = ({
         // api for getting access token
         endpoint?: string;
     };
+    room?: string;
     name?: string;
     avatar?: string;
 }) => {
@@ -48,7 +50,9 @@ const useOnlineCursor = ({
         });
 
         yomo.on('connected', () => {
-            yomo.toRoom('001');
+            if (room) {
+                yomo.toRoom(room);
+            }
 
             yomo.on$<CursorMessage>('online')
                 .pipe(filter(data => data.id !== ID))
@@ -99,18 +103,18 @@ const useOnlineCursor = ({
 
         // yomo.on('closed', () => {});
 
-        const clear = async () => {
+        const cleanup = async () => {
             await me.goOffline();
             yomo.close();
         };
 
-        window.addEventListener('unload', clear);
+        window.addEventListener('unload', cleanup);
 
         return () => {
-            clear();
-            window.removeEventListener('unload', clear);
+            cleanup();
+            window.removeEventListener('unload', cleanup);
         };
-    }, []);
+    }, [room]);
 
     const others: Others[] = [];
 
