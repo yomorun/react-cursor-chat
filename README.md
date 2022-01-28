@@ -31,9 +31,23 @@ by `pnpm`:
 $ pnpm i @yomo/react-cursor-chat
 ```
 
+### Request free dev/test account
+
+Login with your Github account on `https://presence.yomo.run`, will get a free `app_id` and `app_secret`
+
+then, add `.env.local` like:
+
+```bash
+APP_ID="abrHlqtooFakeID"
+APP_SECRET="nFJqSVzQyhbVgdsBeBojoeJTooFakeSecret"
+```
+
 ### Integrate to your project
 
 ```javascript
+import CursorChat from "@yomo/react-cursor-chat";
+import "@yomo/react-cursor-chat/dist/cursor-chat.min.css";
+
 const App = () => {
     return (
         <div className="main">
@@ -43,12 +57,12 @@ const App = () => {
                 <span>ESC</span> to close the input box
             </p>
             <CursorChat
-                presenceURL="wss://presence.yomo.dev"
+                presenceURL="wss://prsc.yomo.dev"
                 presenceAuth={{
-                    type: 'publickey',
-                    publicKey: 'YOUR_PUBLIC_KEY'
+                    type: 'token',
+                    endpoint: "/api/auth",
                 }}
-                avatar='assets/cursor.png'
+                avatar='https://cursor-chat-example.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75'
                 theme="light"
             />
         </div>
@@ -58,13 +72,37 @@ const App = () => {
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-### Start
+### add `/api/auth.js`
 
-```shell
-$ npm run start
+```javascript
+export default async function handler(req, res) {
+  if (req.method === "GET") {
+    const response = await fetch("https://prsc.yomo.dev/api/v1/auth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        app_id: process.env.APP_ID,
+        app_secret: process.env.APP_SECRET,
+      }),
+    });
+    const data = await response.json();
+    res.status(200).json(data.data);
+  } else {
+    // Handle any other HTTP method
+  }
+}
+
 ```
 
-## 🥷🏼 Advanced
+### Start dev
+
+```shell
+$ npm run dev
+```
+
+## 🥷🏼 for hackers
 
 ### Importing the CursorChat component
 
@@ -94,7 +132,7 @@ import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 -   `name?: string`: to set name.
 -   `theme?: 'light' | 'dark'`: The background color of the chat box, the default value is "dark".
 
-### Use hooks and customize the components yourself:
+### Use hooks to customize the component:
 
 ```tsx
 import React, { useMemo } from 'react';
@@ -157,39 +195,9 @@ const YourComponent = ({ presenceURL, presenceAuth, name, avatar }) => {
 };
 ```
 
-### For Production env, How do I get a `presenceAuth` token?
+## Deploy to vercel
 
-If you build your application using next.js, then you can use [API Routes](https://nextjs.org/docs/api-routes/introduction) to get the access token.
-For example, the following API route `pages/api/auth.js` returns a json response with a status code of 200:
-
-```js
-export default async function handler(req, res) {
-    if (req.method === 'GET') {
-        const response = await fetch('https://presence.yomo.dev/api/v1/auth', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                app_id: process.env.PRESENCE_APP_ID,
-                app_secret: process.env.PRESENCE_APP_SECRET,
-            }),
-        });
-        const data = await response.json();
-        res.status(200).json(data.data);
-    } else {
-        // Handle any other HTTP method
-    }
-}
-```
-
-Response data:
-
-```json
-{
-    "token": "eyJhbGciOiJIUzI1..."
-}
-```
+`vc --prod`
 
 ## LICENSE
 
