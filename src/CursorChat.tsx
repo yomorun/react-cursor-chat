@@ -8,15 +8,17 @@ import './styles/cursor-chat.less';
 
 const MeCursor = ({
     cursor,
+    showLatency,
     theme,
 }: {
     cursor: Me;
+    showLatency: boolean;
     theme?: 'light' | 'dark';
 }) => {
     const refContainer = useRenderPosition(cursor);
     const [showInput, setShowInput] = useState(false);
     const [inputValue, setInputValue] = useState('');
-    const latencyData = useLatency(cursor);
+    const latencyData = useLatency(cursor, showLatency);
 
     const onKeydown = useCallback(e => {
         if (e.code === 'Slash') {
@@ -93,14 +95,16 @@ const MeCursor = ({
 
 const OthersCursor = ({
     cursor,
+    showLatency,
     theme,
 }: {
     cursor: Others;
+    showLatency: boolean;
     theme?: 'light' | 'dark';
 }) => {
     const refContainer = useRenderPosition(cursor);
     const [msg, setMsg] = useState(cursor.name);
-    const latencyData = useLatency(cursor);
+    const latencyData = useLatency(cursor, showLatency);
 
     useEffect(() => {
         cursor.onTextMessage = (msg: string) => {
@@ -150,6 +154,7 @@ const CursorChat = ({
     presenceURL,
     presenceAuth,
     room,
+    showLatency = false,
     name,
     avatar,
     theme = 'dark',
@@ -163,6 +168,7 @@ const CursorChat = ({
         endpoint?: string;
     };
     room?: string;
+    showLatency?: boolean;
     name?: string;
     avatar?: string;
     theme?: 'light' | 'dark';
@@ -182,9 +188,14 @@ const CursorChat = ({
     return (
         <div className="online-cursor-wrapper">
             {others.map(item => (
-                <OthersCursor key={item.id} cursor={item} theme={theme} />
+                <OthersCursor
+                    key={item.id}
+                    cursor={item}
+                    showLatency={showLatency}
+                    theme={theme}
+                />
             ))}
-            <MeCursor cursor={me} theme={theme} />
+            <MeCursor cursor={me} showLatency={showLatency} theme={theme} />
         </div>
     );
 };
