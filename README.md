@@ -128,6 +128,7 @@ import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 -   `presenceURL: string`: to set the WebSocket service address.
 -   `presenceAuth: { type: 'publickey' | 'token'; publicKey?: string; endpoint?: string; }`: to set `presencejs` service Auth
 -   `room?: string`: to set room.
+-   `showLatency?: boolean`: to set showLatency.
 -   `avatar?: string`: to set avatar.
 -   `name?: string`: to set name.
 -   `theme?: 'light' | 'dark'`: The background color of the chat box, the default value is "dark".
@@ -198,6 +199,13 @@ const YourComponent = ({ presenceURL, presenceAuth, name, avatar }) => {
 ## Deploy to vercel
 
 `vc --prod`
+
+## Run example
+```sh 
+cd react-cursor-chat/example
+npm i
+npm run start
+```
 
 ## LICENSE
 
