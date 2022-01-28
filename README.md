@@ -45,8 +45,8 @@ APP_SECRET="nFJqSVzQyhbVgdsBeBojoeJTooFakeSecret"
 ### Integrate to your project
 
 ```javascript
-import CursorChat from "@yomo/react-cursor-chat";
-import "@yomo/react-cursor-chat/dist/cursor-chat.min.css";
+import CursorChat from '@yomo/react-cursor-chat';
+import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 
 const App = () => {
     return (
@@ -60,9 +60,9 @@ const App = () => {
                 presenceURL="wss://prsc.yomo.dev"
                 presenceAuth={{
                     type: 'token',
-                    endpoint: "/api/auth",
+                    endpoint: '/api/auth',
                 }}
-                avatar='https://cursor-chat-example.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75'
+                avatar="https://cursor-chat-example.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75"
                 theme="light"
             />
         </div>
@@ -76,24 +76,36 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ```javascript
 export default async function handler(req, res) {
-  if (req.method === "GET") {
-    const response = await fetch("https://prsc.yomo.dev/api/v1/auth", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        app_id: process.env.APP_ID,
-        app_secret: process.env.APP_SECRET,
-      }),
-    });
-    const data = await response.json();
-    res.status(200).json(data.data);
-  } else {
-    // Handle any other HTTP method
-  }
+    if (req.method === 'GET') {
+        try {
+            const response = await fetch('https://prsc.yomo.dev/api/v1/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    app_id: process.env.APP_ID,
+                    app_secret: process.env.APP_SECRET,
+                }),
+            });
+            const data = await response.json();
+            const token = data.data;
+            if (token) {
+                res.status(200).json(token);
+            } else {
+                res.status(400).json({ msg: data.message });
+            }
+        } catch (error) {
+            if (typeof error === 'string') {
+                res.status(500).json({ msg: error });
+            } else if (error instanceof Error) {
+                res.status(500).json({ msg: error.message });
+            }
+        }
+    } else {
+        // Handle any other HTTP method
+    }
 }
-
 ```
 
 ### Start dev
@@ -111,7 +123,7 @@ import React from 'react';
 import CursorChat from '@yomo/react-cursor-chat';
 import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 
-// `wss://presence.yomo.dev` is YoMo's free public test service 
+// `wss://presence.yomo.dev` is YoMo's free public test service
 <CursorChat
     presenceURL="wss://presence.yomo.dev"
     presenceAuth={{
@@ -128,6 +140,7 @@ import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 -   `presenceURL: string`: to set the WebSocket service address.
 -   `presenceAuth: { type: 'publickey' | 'token'; publicKey?: string; endpoint?: string; }`: to set `presencejs` service Auth
 -   `room?: string`: to set room.
+-   `showLatency?: boolean`: to set showLatency.
 -   `avatar?: string`: to set avatar.
 -   `name?: string`: to set name.
 -   `theme?: 'light' | 'dark'`: The background color of the chat box, the default value is "dark".
@@ -199,6 +212,14 @@ const YourComponent = ({ presenceURL, presenceAuth, name, avatar }) => {
 ## Deploy to vercel
 
 `vc --prod`
+
+## Run example
+
+```sh
+cd react-cursor-chat/example
+npm i
+npm run start
+```
 
 ## LICENSE
 
