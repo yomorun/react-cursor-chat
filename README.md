@@ -2,7 +2,7 @@
 
 ## 🧬 Introduction
 
-A react component for cursor chat
+A react component helps bring Figma's Cursor Chat to your web applications in less than 3 minutes, making real-time collaboration anywhere.
 
 -   Press `/` to bring up the input box
 -   Press `ESC` to close the input box
