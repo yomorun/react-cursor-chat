@@ -131,6 +131,7 @@ import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 -   `avatar?: string`: to set avatar.
 -   `name?: string`: to set name.
 -   `theme?: 'light' | 'dark'`: The background color of the chat box, the default value is "dark".
+-   `showLatency?: boolean`: to show connected mesh server and the end-to-end latency.
 
 ### Use hooks to customize the component:
 
