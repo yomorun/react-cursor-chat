@@ -7,7 +7,8 @@ A react component helps bring Figma's Cursor Chat to your web applications in le
 -   Press `/` to bring up the input box
 -   Press `ESC` to close the input box
 
-![screenshot](screenshot.png)
+![screenshot](commerce-screenshot.jpg)
+[Demo] Nextjs Commerce with <CursorChat/> https://commerce-ochre-sigma-86.vercel.app/
 
 ## 🤹🏻‍♀️ Quick Start
 
