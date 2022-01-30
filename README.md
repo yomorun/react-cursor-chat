@@ -2,7 +2,7 @@
 
 ## 🧬 Introduction
 
-A react component helps bring Figma's Cursor Chat to your web applications in less than 3 minutes, making real-time collaboration anywhere.
+A react component helps bring Figma's Cursor Chat to your web applications in less than 3 minutes, making real-time collaboration anywhere. based on [Presencejs](https://presence.yomo.run).
 
 -   Press `/` to bring up the input box
 -   Press `ESC` to close the input box
@@ -115,6 +115,12 @@ export default async function handler(req, res) {
 $ npm run dev
 ```
 
+## ▲ Deploy to vercel
+
+[set vercel env](vercel-deploy.jpg)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyomorun%2Fcursor-chat-example&env=PRESENCE_APP_SECRET,PRESENCE_APP_ID&envDescription=Presencejs%20free%20dev%2Ftest%20server%3A%20https%3A%2F%2Fpresence.yomo.run&project-name=try-presencejs&repo-name=try-presencejs&demo-title=Vercel%20Commerce%20with%20%3CCursorChat%20%2F%3E%20component&demo-description=Realtime%20collaboration%20with%20comsumers%20in%20this%20Metaverser%20Commerce&demo-url=https%3A%2F%2Fcommerce-ochre-sigma-86.vercel.app%2F)
+
 ## 🥷🏼 for hackers
 
 ### Importing the CursorChat component
@@ -209,10 +215,6 @@ const YourComponent = ({ presenceURL, presenceAuth, name, avatar }) => {
     );
 };
 ```
-
-## Deploy to vercel
-
-`vc --prod`
 
 ## Run example
 
