@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Me from '../cursor/me';
 import Others from '../cursor/others';
 
-import { Presence } from '@yomo/presencejs';
+import Presence from '@yomo/presencejs';
 import { uuidv4 } from '../helper';
 import { CursorMessage, OfflineMessage } from '../types';
 import { filter } from 'rxjs/operators';

@@ -1,13 +1,11 @@
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { Presence } from '@yomo/presencejs';
+import Presence from '@yomo/presencejs';
 import Cursor from './cursor';
 import { getMousePosition } from '../helper';
 import { MovementMessage, TextMessage } from '../types';
 export default class Others extends Cursor {
-    private textMessageSubscription: Subscription | undefined;
-    private movementMessageSubscription: Subscription | undefined;
-    private latencySubscription: Subscription | undefined;
+    private subscription: Subscription | undefined;
 
     constructor({
         id,
@@ -26,25 +24,16 @@ export default class Others extends Cursor {
     }
 
     goOnline(yomo: Presence) {
-        this.movementMessageSubscription = this.subscribeMovement(yomo);
-        this.textMessageSubscription = this.subscribeTextMessage(yomo);
-        this.latencySubscription = super.subscribeLatency(yomo);
+        this.subscription = this.subscribeMovement(yomo);
+        const textMessageSubscription = this.subscribeTextMessage(yomo);
+        const latencySubscription = super.subscribeLatency(yomo);
+        this.subscription.add(textMessageSubscription);
+        this.subscription.add(latencySubscription);
     }
 
     unsubscribe() {
-        if (this.textMessageSubscription) {
-            this.textMessageSubscription.unsubscribe();
-            this.textMessageSubscription = undefined;
-        }
-
-        if (this.movementMessageSubscription) {
-            this.movementMessageSubscription.unsubscribe();
-            this.movementMessageSubscription = undefined;
-        }
-
-        if (this.latencySubscription) {
-            this.latencySubscription.unsubscribe();
-            this.latencySubscription = undefined;
+        if (this.subscription) {
+            this.subscription.unsubscribe();
         }
     }
 

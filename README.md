@@ -117,7 +117,7 @@ $ npm run dev
 
 ## ▲ Deploy to vercel
 
-Get your free dev server account from https://presence.yomo.run, add them to `Enviroment Variables` section to your Vercel Console:
+Get your free dev server account from https://presencejs.yomo.run, add them to `Enviroment Variables` section to your Vercel Console:
 
 ![set vercel env](vercel-deploy.jpg)
 
@@ -134,9 +134,9 @@ import React from 'react';
 import CursorChat from '@yomo/react-cursor-chat';
 import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 
-// `wss://presence.yomo.dev` is YoMo's free public test service
+// `https://prsc.yomo.dev` is YoMo's free public test service
 <CursorChat
-    presenceURL="wss://presence.yomo.dev"
+    presenceURL="https://prsc.yomo.dev"
     presenceAuth={{
         // Certification Type
         type: 'token',
@@ -151,11 +151,10 @@ import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 -   `presenceURL: string`: to set the WebSocket service address.
 -   `presenceAuth: { type: 'publickey' | 'token'; publicKey?: string; endpoint?: string; }`: to set `presencejs` service Auth
 -   `room?: string`: to set room.
--   `showLatency?: boolean`: to set showLatency.
+-   `showLatency?: boolean`: to show connected mesh server and the end-to-end latency.
 -   `avatar?: string`: to set avatar.
 -   `name?: string`: to set name.
 -   `theme?: 'light' | 'dark'`: The background color of the chat box, the default value is "dark".
--   `showLatency?: boolean`: to show connected mesh server and the end-to-end latency.
 
 ### Use hooks to customize the component:
 
@@ -225,7 +224,7 @@ const YourComponent = ({ presenceURL, presenceAuth, name, avatar }) => {
 ```sh
 cd react-cursor-chat/example
 npm i
-npm run start
+npm run dev
 ```
 
 ## LICENSE
