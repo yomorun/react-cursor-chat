@@ -1,16 +1,13 @@
 import { fromEvent, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Presence } from '@yomo/presencejs';
+import Presence from '@yomo/presencejs';
 import Cursor from './cursor';
 import { getScale } from '../helper';
 import { CursorMessage, TextMessage, OfflineMessage } from '../types';
 
 export default class Me extends Cursor {
     private yomo: Presence | undefined;
-    private onlineSubscription: Subscription | undefined;
-    private mousemoveSubscription: Subscription | undefined;
-    private mousePositionSubscription: Subscription | undefined;
-    private latencySubscription: Subscription | undefined;
+    private subscription: Subscription;
 
     constructor({
         id,
@@ -26,18 +23,18 @@ export default class Me extends Cursor {
         avatar?: string;
     }) {
         super(id, x, y, name, avatar);
-        this.mousemoveSubscription = this.subscribeMousemove();
+        this.subscription = this.subscribeMousemove();
     }
 
     goOnline(yomo: Presence) {
         this.yomo = yomo;
         this.online(yomo);
-        this.onlineSubscription = this.subscribeOnline(yomo);
-        if (this.mousePositionSubscription) {
-            this.mousePositionSubscription.unsubscribe();
-        }
-        this.mousePositionSubscription = this.subscribeMousePosition(yomo);
-        this.latencySubscription = super.subscribeLatency(yomo);
+        const onlineSubscription = this.subscribeOnline(yomo);
+        const mousePositionSubscription = this.subscribeMousePosition(yomo);
+        const latencySubscription = super.subscribeLatency(yomo);
+        this.subscription.add(onlineSubscription);
+        this.subscription.add(mousePositionSubscription);
+        this.subscription.add(latencySubscription);
     }
 
     async goOffline() {
@@ -47,24 +44,8 @@ export default class Me extends Cursor {
             });
         }
 
-        if (this.mousemoveSubscription) {
-            this.mousemoveSubscription.unsubscribe();
-            this.mousemoveSubscription = undefined;
-        }
-
-        if (this.mousePositionSubscription) {
-            this.mousePositionSubscription.unsubscribe();
-            this.mousePositionSubscription = undefined;
-        }
-
-        if (this.onlineSubscription) {
-            this.onlineSubscription.unsubscribe();
-            this.onlineSubscription = undefined;
-        }
-
-        if (this.latencySubscription) {
-            this.latencySubscription.unsubscribe();
-            this.latencySubscription = undefined;
+        if (this.subscription) {
+            this.subscription.unsubscribe();
         }
 
         return await new Promise(resolve => {

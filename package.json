@@ -1,6 +1,6 @@
 {
   "name": "@yomo/react-cursor-chat",
-  "version": "0.0.13",
+  "version": "0.1.1",
   "description": "A react component for cursor chat",
   "keywords": [
     "CursorChat",
@@ -59,7 +59,7 @@
     "whatwg-fetch": "^3.6.2"
   },
   "dependencies": {
-    "@yomo/presencejs": "^0.0.6",
+    "@yomo/presencejs": "^1.0.0-alpha.2",
     "react": ">=16",
     "react-dom": "^17.0.2",
     "rxjs": "^6.6.6"

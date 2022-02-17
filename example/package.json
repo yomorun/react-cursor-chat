@@ -1,25 +1,11 @@
 {
-  "name": "react-cursor-chat-example",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "name": "cursor-chat-example",
+  "private": true,
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html --no-minify"
-  },
-  "dependencies": {
-    "react-app-polyfill": "^2.0.0"
-  },
-  "alias": {
-    "react": "../node_modules/react",
-    "react-dom": "../node_modules/react-dom/profiling",
-    "scheduler/tracing": "../node_modules/scheduler/tracing-profiling"
-  },
-  "devDependencies": {
-    "@types/react": "^16.9.11",
-    "@types/react-dom": "^16.8.4",
-    "parcel": "1.12.3",
-    "typescript": "^3.4.5"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "prettier": {
     "printWidth": 80,
@@ -27,5 +13,19 @@
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "dependencies": {
+    "@yomo/react-cursor-chat": "^0.1.1",
+    "next": "12.0.7",
+    "next-auth": "^4.0.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.12",
+    "@types/react": "17.0.37",
+    "eslint": "8.4.1",
+    "eslint-config-next": "12.0.7",
+    "typescript": "4.5.2"
   }
 }

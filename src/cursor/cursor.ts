@@ -1,4 +1,4 @@
-import { Presence } from '@yomo/presencejs';
+import Presence from '@yomo/presencejs';
 import { stringToColor } from '../helper';
 import { Latency, MousePosition } from '../types';
 
