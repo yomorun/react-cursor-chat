@@ -1,5 +1,7 @@
 # @yomo/react-cursor-chat
 
+![screenshot](show.gif)
+
 ## 🧬 Introduction
 
 A react component helps bring Figma's Cursor Chat to your web applications in less than 3 minutes, making real-time collaboration anywhere. based on [Presencejs](https://presence.yomo.run).
@@ -7,9 +9,9 @@ A react component helps bring Figma's Cursor Chat to your web applications in le
 -   Press `/` to bring up the input box
 -   Press `ESC` to close the input box
 
-![screenshot](show.gif)
+Online Preview: https://commerce-ochre-sigma-86.vercel.app/
 
-[Demo] Nextjs Commerce with <CursorChat/> https://commerce-ochre-sigma-86.vercel.app/
+Youtube Introduction: https://www.youtube.com/watch?v=28VwErGxn9c
 
 ## 🤹🏻‍♀️ Quick Start
 
