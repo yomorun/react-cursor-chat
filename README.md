@@ -1,5 +1,8 @@
 # @yomo/react-cursor-chat
 
+![version](https://badgen.net/npm/v/@yomo/react-cursor-chat)
+![license](https://badgen.net/npm/license/@yomo/presencejs)
+
 ![screenshot](show.gif)
 
 ## 🧬 Introduction
