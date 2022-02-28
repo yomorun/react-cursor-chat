@@ -33,10 +33,7 @@ const Home: NextPage = () => {
                 <CursorChat
                     showLatency
                     presenceURL="https://prsc.yomo.dev"
-                    presenceAuth={{
-                        type: 'token',
-                        endpoint: '/api/auth',
-                    }}
+                    presenceAuthEndpoint="/api/auth"
                     avatar={`/cursor-avatar-${new Date().getSeconds() % 9}.png`}
                     theme="light"
                 />

@@ -152,7 +152,7 @@ const OthersCursor = ({
 
 const CursorChat = ({
     presenceURL,
-    presenceAuth,
+    presenceAuthEndpoint,
     room,
     showLatency = false,
     name,
@@ -160,13 +160,7 @@ const CursorChat = ({
     theme = 'dark',
 }: {
     presenceURL: string;
-    presenceAuth: {
-        type: 'publickey' | 'token';
-        // The public key in your Allegro Mesh project.
-        publicKey?: string;
-        // api for getting access token
-        endpoint?: string;
-    };
+    presenceAuthEndpoint: string;
     room?: string;
     showLatency?: boolean;
     name?: string;
@@ -175,7 +169,7 @@ const CursorChat = ({
 }): JSX.Element | null => {
     const { me, others } = useOnlineCursor({
         presenceURL,
-        presenceAuth,
+        presenceAuthEndpoint,
         room,
         name,
         avatar,

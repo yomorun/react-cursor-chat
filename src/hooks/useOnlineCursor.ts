@@ -1,28 +1,20 @@
 import { useEffect, useState } from 'react';
-
+import { filter } from 'rxjs/operators';
+import Presence from '@yomo/presencejs';
 import Me from '../cursor/me';
 import Others from '../cursor/others';
-
-import Presence from '@yomo/presencejs';
 import { uuidv4 } from '../helper';
 import { CursorMessage, OfflineMessage } from '../types';
-import { filter } from 'rxjs/operators';
 
 const useOnlineCursor = ({
     presenceURL,
-    presenceAuth,
+    presenceAuthEndpoint,
     room,
     name,
     avatar,
 }: {
     presenceURL: string;
-    presenceAuth: {
-        type: 'publickey' | 'token';
-        // The public key in your Allegro Mesh project.
-        publicKey?: string;
-        // api for getting access token
-        endpoint?: string;
-    };
+    presenceAuthEndpoint: string;
     room?: string;
     name?: string;
     avatar?: string;
@@ -46,7 +38,10 @@ const useOnlineCursor = ({
         setMe(me);
 
         const yomo = new Presence(presenceURL, {
-            auth: presenceAuth,
+            auth: {
+                type: 'token',
+                endpoint: presenceAuthEndpoint,
+            },
         });
 
         yomo.on('connected', () => {

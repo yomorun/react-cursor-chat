@@ -3,7 +3,6 @@ import Others from '../cursor/others';
 import Me from '../cursor/me';
 import { MousePosition } from '../types';
 
-
 const useRenderPosition = (cursor: Me | Others) => {
     const refContainer = useRef<HTMLDivElement>(null);
 

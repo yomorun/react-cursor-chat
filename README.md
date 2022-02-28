@@ -12,7 +12,7 @@ A react component helps bring Figma's Cursor Chat to your web applications in le
 -   Press `/` to bring up the input box
 -   Press `ESC` to close the input box
 
-Online Preview: https://commerce-ochre-sigma-86.vercel.app/
+Online Preview: https://commerce-cursor-chat.vercel.app
 
 Youtube Introduction: https://www.youtube.com/watch?v=28VwErGxn9c
 
@@ -64,11 +64,8 @@ const App = () => {
                 <span>ESC</span> to close the input box
             </p>
             <CursorChat
-                presenceURL="wss://prsc.yomo.dev"
-                presenceAuth={{
-                    type: 'token',
-                    endpoint: '/api/auth',
-                }}
+                presenceURL="https://prsc.yomo.dev"
+                presenceAuthEndpoint="/api/auth"
                 avatar="https://cursor-chat-example.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75"
                 theme="light"
             />
@@ -143,19 +140,14 @@ import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 // `https://prsc.yomo.dev` is YoMo's free public test service
 <CursorChat
     presenceURL="https://prsc.yomo.dev"
-    presenceAuth={{
-        // Certification Type
-        type: 'token',
-        // api for getting access token
-        endpoint: '/api/auth',
-    }}
+    presenceAuthEndpoint="/api/auth"
     avatar="https://avatars.githubusercontent.com/u/67308985?s=200&v=4"
     theme="light"
 />;
 ```
 
--   `presenceURL: string`: to set the WebSocket service address.
--   `presenceAuth: { type: 'publickey' | 'token'; publicKey?: string; endpoint?: string; }`: to set `presencejs` service Auth
+-   `presenceURL: string`: to set the YoMo's service address.
+-   `presenceAuthEndpoint: string`: to set api for getting access token
 -   `room?: string`: to set room.
 -   `showLatency?: boolean`: to show connected mesh server and the end-to-end latency.
 -   `avatar?: string`: to set avatar.
@@ -205,7 +197,7 @@ const OthersCursor = ({ cursor }) => {
 const YourComponent = ({ presenceURL, presenceAuth, name, avatar }) => {
     const { me, others } = useOnlineCursor({
         presenceURL,
-        presenceAuth,
+        presenceAuthEndpoint,
         name,
         avatar,
     });

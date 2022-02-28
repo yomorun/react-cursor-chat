@@ -15,7 +15,8 @@ describe('unit test for custom hook useOnlineCursor', () => {
         await act(async () => {
             const { result } = renderHook(() =>
                 useOnlineCursor({
-                    socketURL: 'wss://ws-dev.yomo.run',
+                    presenceURL: 'https://prsc.yomo.dev',
+                    presenceAuthEndpoint: '/api/auth',
                     name: '001',
                 })
             );
