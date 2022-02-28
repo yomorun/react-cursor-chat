@@ -3,7 +3,10 @@
 ![version](https://badgen.net/npm/v/@yomo/react-cursor-chat)
 ![license](https://badgen.net/npm/license/@yomo/presencejs)
 
-![screenshot](show.gif)
+<p align="center">
+    <img src="https://github.com/yomorun/react-cursor-chat/raw/main/show.gif" alt="yomo react-cursor-chat" width="100%"></img><br/>
+    <a href="https://www.producthunt.com/posts/cursor-chat-anywhere?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-cursor-chat-anywhere" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=333289&theme=dark" alt="Cursor Chat Anywhere - Add Figma like cursor chat to your own products | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+</p>
 
 ## 🧬 Introduction
 
