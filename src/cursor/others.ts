@@ -4,6 +4,7 @@ import Presence from '@yomo/presencejs';
 import Cursor from './cursor';
 import { getMousePosition } from '../helper';
 import { MovementMessage, TextMessage } from '../types';
+
 export default class Others extends Cursor {
     private subscription: Subscription | undefined;
 
