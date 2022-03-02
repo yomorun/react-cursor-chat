@@ -1,8 +1,14 @@
-import { useState, useEffect } from 'react';
-import Others from '../cursor/others';
-import Me from '../cursor/me';
+import React, { useState, useEffect } from 'react';
+import Me from './cursor/me';
+import Others from './cursor/others';
 
-const useLatency = (cursor: Me | Others, showLatency: boolean) => {
+const Latency = ({
+    cursor,
+    showLatency,
+}: {
+    cursor: Me | Others;
+    showLatency: boolean;
+}) => {
     const [latencyData, setLatencyData] = useState({
         meshId: '',
         latency: 0,
@@ -37,7 +43,23 @@ const useLatency = (cursor: Me | Others, showLatency: boolean) => {
         }
     }, [showLatency]);
 
-    return latencyData;
+    if (latencyData.latency === 0) {
+        return null;
+    }
+
+    return (
+        <div className="online-cursor-wrapper__latency">
+            📍 {latencyData.meshId}{' '}
+            <span
+                style={{
+                    backgroundColor: latencyData.backgroundColor,
+                    color: '#fff',
+                }}
+            >
+                {latencyData.latency}ms
+            </span>
+        </div>
+    );
 };
 
-export default useLatency;
+export default Latency;

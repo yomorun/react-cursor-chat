@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import CursorChat from '@yomo/react-cursor-chat';
-import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
+import '@yomo/react-cursor-chat/dist/light.css';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
@@ -35,7 +35,6 @@ const Home: NextPage = () => {
                     presenceURL="https://prsc.yomo.dev"
                     presenceAuthEndpoint="/api/auth"
                     avatar={`/cursor-avatar-${new Date().getSeconds() % 9}.png`}
-                    theme="light"
                 />
             </main>
         </div>
