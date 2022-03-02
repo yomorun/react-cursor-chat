@@ -56,7 +56,9 @@ APP_SECRET="nFJqSVzQyhbVgdsBeBojoeJTooFakeSecret"
 
 ```javascript
 import CursorChat from '@yomo/react-cursor-chat';
-import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
+// Import theme styles
+// import '@yomo/react-cursor-chat/dist/light.css';
+import '@yomo/react-cursor-chat/dist/dark.css';
 
 const App = () => {
     return (
@@ -70,7 +72,6 @@ const App = () => {
                 presenceURL="https://prsc.yomo.dev"
                 presenceAuthEndpoint="/api/auth"
                 avatar="https://cursor-chat-example.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75"
-                theme="light"
             />
         </div>
     );
@@ -138,14 +139,13 @@ or click this button to try out:
 ```jsx
 import React from 'react';
 import CursorChat from '@yomo/react-cursor-chat';
-import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
+import '@yomo/react-cursor-chat/dist/dark.css';
 
 // `https://prsc.yomo.dev` is YoMo's free public test service
 <CursorChat
     presenceURL="https://prsc.yomo.dev"
     presenceAuthEndpoint="/api/auth"
     avatar="https://avatars.githubusercontent.com/u/67308985?s=200&v=4"
-    theme="light"
 />;
 ```
 
@@ -155,7 +155,6 @@ import '@yomo/react-cursor-chat/dist/cursor-chat.min.css';
 -   `showLatency?: boolean`: to show connected mesh server and the end-to-end latency.
 -   `avatar?: string`: to set avatar.
 -   `name?: string`: to set name.
--   `theme?: 'light' | 'dark'`: The background color of the chat box, the default value is "dark".
 
 ### Use hooks to customize the component:
 
@@ -197,10 +196,17 @@ const OthersCursor = ({ cursor }) => {
 };
 
 // Exporting your custom components
-const YourComponent = ({ presenceURL, presenceAuth, name, avatar }) => {
+const YourComponent = ({
+    presenceURL,
+    presenceAuthEndpoint,
+    room,
+    name,
+    avatar,
+}) => {
     const { me, others } = useOnlineCursor({
         presenceURL,
         presenceAuthEndpoint,
+        room,
         name,
         avatar,
     });
