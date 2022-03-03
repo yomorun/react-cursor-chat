@@ -15,67 +15,69 @@
 
 .online-cursor-wrapper__cursor {
     position: absolute;
-    width: 800px;
+    width: 2000px;
 }
 
-.online-cursor-wrapper__latency {
+.online-cursor-wrapper__latency-box {
     position: absolute;
     top: -10px;
-    left: 38px;
+    left: 32px;
+    color: #fff;
     font-size: 12px;
 }
 
-.online-cursor-wrapper__latency > span {
+.online-cursor-wrapper__meshId {
+    margin-left: 2px;
+    padding: 1px 5px;
+    border-radius: 5px;
+    background-color: black;
+}
+
+.online-cursor-wrapper__latency {
+    margin-left: 2px;
     padding: 1px 5px;
     border-radius: 5px;
     background-color: green;
 }
 
-.online-cursor-wrapper__avatar {
-    z-index: 2;
+.online-cursor-wrapper__tail-box {
     position: absolute;
-    top: 22px;
-    left: 38px;
+    top: 10px;
+    left: 32px;
+    min-height: 30px;
+    border-radius: 0 10px 10px 15px;
+    box-sizing: border-box;
+    padding: 5px 10px;
+}
+
+.online-cursor-wrapper__user {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.online-cursor-wrapper__avatar {
+    position: relative;
     width: 32px;
     height: 32px;
     border-radius: 8px;
+    margin-right: 5px;
 }
 
 .online-cursor-wrapper__name {
-    z-index: 2;
-    position: absolute;
-    top: 22px;
-    left: 34px;
-    padding: 4px 6px;
-    border-radius: 4px;
-}
-
-.online-cursor-wrapper__text {
-    z-index: 1;
-    position: absolute;
-    top: 12px;
-    left: 32px;
-    max-width: 300px;
-    min-height: 52px;
-    display: flex;
-    align-items: center;
-    padding: 10px 10px 10px 40px;
+    position: relative;
     font-size: 16px;
-    box-sizing: border-box;
-    border-radius: 8px;
-    word-wrap: break-all;
+    color: #fff;
 }
 
 .online-cursor-wrapper__input-box {
-    z-index: 1;
-    position: absolute;
-    top: 12px;
-    left: 32px;
-    box-sizing: border-box;
+    position: relative;
     min-width: 150px;
-    height: 52px;
+    height: 32px;
     border-radius: 8px;
     font-size: 16px;
+    color: #fff;
+    padding: 5px 0;
 }
 
 .online-cursor-wrapper__input-box > span {
@@ -100,5 +102,18 @@
     border: 0;
     margin: 0;
     box-sizing: content-box !important;
-    padding: 0 10px 0 42px;
+}
+
+.online-cursor-wrapper__input-box > input::placeholder {
+    color: #fff;
+    font-size: 16px;
+}
+
+.online-cursor-wrapper__text {
+    position: relative;
+    max-width: 320px;
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+    padding: 5px 0;
 }

@@ -1,8 +1,11 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+
 import CursorChat from '@yomo/react-cursor-chat';
-import '@yomo/react-cursor-chat/dist/light.css';
+import '@yomo/react-cursor-chat/dist/apricot-yellow.css';
+// import CursorChat from '../dist';
+
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
@@ -23,7 +26,6 @@ const Home: NextPage = () => {
                     href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400&amp;display=swap"
                 />
             </Head>
-
             <main className={styles.main}>
                 <Image width={100} height={100} src="/logo.png" alt="logo" />
                 <p className={styles.tips}>
@@ -35,6 +37,7 @@ const Home: NextPage = () => {
                     presenceURL="https://prsc.yomo.dev"
                     presenceAuthEndpoint="/api/auth"
                     avatar={`/cursor-avatar-${new Date().getSeconds() % 9}.png`}
+                    name="osdodo"
                 />
             </main>
         </div>

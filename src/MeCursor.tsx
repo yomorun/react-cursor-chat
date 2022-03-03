@@ -28,9 +28,6 @@ const MeCursor = ({
         const keydown = (e: KeyboardEvent) => {
             if (e.code === 'Slash') {
                 setShowInput(true);
-                setInputValue(
-                    cursor.name && !cursor.avatar ? cursor.name + ': ' : ''
-                );
             }
 
             if (e.code === 'Escape') {
@@ -52,34 +49,38 @@ const MeCursor = ({
             <div className="online-cursor-wrapper__cursor" ref={refContainer}>
                 <CursorIcon color={cursor.color} />
                 <Latency cursor={cursor} showLatency={showLatency} />
-                {cursor.avatar ? (
-                    <img
-                        className="online-cursor-wrapper__avatar"
-                        src={cursor.avatar}
-                        alt="avatar"
-                    />
-                ) : cursor.name && !cursor.avatar && !showInput ? (
-                    <span className="online-cursor-wrapper__name">
-                        {cursor.name}
-                    </span>
-                ) : null}
-                {showInput && (
-                    <div className="online-cursor-wrapper__input-box">
-                        <span>{inputValue}</span>
-                        <input
-                            autoFocus
-                            placeholder="Say something"
-                            value={inputValue}
-                            onChange={onChangeInput}
-                            style={{
-                                paddingLeft:
-                                    cursor.name && !cursor.avatar && showInput
-                                        ? 10
-                                        : 42,
-                            }}
-                        />
+                <div
+                    className="online-cursor-wrapper__tail-box"
+                    style={{
+                        borderBottomLeftRadius: showInput ? 30 : 15,
+                    }}
+                >
+                    <div className="online-cursor-wrapper__user">
+                        {cursor.avatar && (
+                            <img
+                                className="online-cursor-wrapper__avatar"
+                                src={cursor.avatar}
+                                alt="avatar"
+                            />
+                        )}
+                        {cursor.name && (
+                            <span className="online-cursor-wrapper__name">
+                                {cursor.name}
+                            </span>
+                        )}
                     </div>
-                )}
+                    {showInput && (
+                        <div className="online-cursor-wrapper__input-box">
+                            <span>{inputValue}</span>
+                            <input
+                                autoFocus
+                                placeholder="Say something"
+                                value={inputValue}
+                                onChange={onChangeInput}
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
         ),
         [showInput, inputValue, showLatency]

@@ -57,8 +57,8 @@ APP_SECRET="nFJqSVzQyhbVgdsBeBojoeJTooFakeSecret"
 ```javascript
 import CursorChat from '@yomo/react-cursor-chat';
 // Import theme styles
-// import '@yomo/react-cursor-chat/dist/light.css';
-import '@yomo/react-cursor-chat/dist/dark.css';
+// import '@yomo/react-cursor-chat/dist/apricot-yellow.css';
+import '@yomo/react-cursor-chat/dist/hairy-green.css';
 
 const App = () => {
     return (
@@ -79,6 +79,19 @@ const App = () => {
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
+
+### Theme Style
+
+<div style="display:flex;">
+   <div>
+        <div>hairy-green</div>
+        <img src="https://github.com/yomorun/react-cursor-chat/raw/main/hairy-green.png" width="200px"  alt="yomo react-cursor-chat hairy-green" />
+    </div>
+    <div>
+        <div>apricot-yellow</div>
+        <img src="https://github.com/yomorun/react-cursor-chat/raw/main/apricot-yellow.png" width="200px"  alt="yomo react-cursor-chat apricot-yellow" />
+    </div>
+</div>
 
 ### add `/api/auth.js`
 
@@ -139,7 +152,7 @@ or click this button to try out:
 ```jsx
 import React from 'react';
 import CursorChat from '@yomo/react-cursor-chat';
-import '@yomo/react-cursor-chat/dist/dark.css';
+import '@yomo/react-cursor-chat/dist/hairy-green.css';
 
 // `https://prsc.yomo.dev` is YoMo's free public test service
 <CursorChat
