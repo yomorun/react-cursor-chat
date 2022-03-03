@@ -156,6 +156,42 @@ import '@yomo/react-cursor-chat/dist/dark.css';
 -   `avatar?: string`: to set avatar.
 -   `name?: string`: to set name.
 
+### Change the CursorChat style
+
+There are two bulit-in styles in Cursor-chat component:`apricot-yellow` and `hairy-green`,you should import one of them to use in your web application just like this:
+
+```jsx
+import CursorChat from '@yomo/react-cursor-chat';
+// Import theme styles
+// import '@yomo/react-cursor-chat/dist/apricot-yellow.css';
+import '@yomo/react-cursor-chat/dist/hairy-green.css';
+
+const App = () => {
+    return (
+        <div className="main">
+            <img className="logo" src={logo} alt="logo" />
+            <p className="tips">
+                Press <span>/</span> to bring up the input box <br /> Press{' '}
+                <span>ESC</span> to close the input box
+            </p>
+            <CursorChat
+                presenceURL="https://prsc.yomo.dev"
+                presenceAuthEndpoint="/api/auth"
+                avatar="https://cursor-chat-example.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75"
+            />
+        </div>
+    );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+And then the style will like this:
+<img alt='hairy-green' src='/hairy-green.png'/>
+
+If you want to change to the `apricot-yellow`,delete `//` before `import '@yomo/react-cursor-chat/dist/apricot-yellow.css';` and add `//`before `import '@yomo/react-cursor-chat/dist/hairy-green.css';`.You can only choose one of them.Then you can see the style as follow:
+<img alt='apricot-yellow' src='/apricot-yellow'/>
+
 ### Use hooks to customize the component:
 
 ```tsx
