@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import useOnlineCursor from './hooks/useOnlineCursor';
 import OthersCursor from './OthersCursor';
 import MeCursor from './MeCursor';
-import './styles/light.css';
-import './styles/dark.css';
+import './styles/hairy-green.css';
+import './styles/apricot-yellow.css';
 
 const CursorChat = ({
     presenceURL,
@@ -20,10 +20,6 @@ const CursorChat = ({
     name?: string;
     avatar?: string;
 }): JSX.Element | null => {
-    if (name && avatar) {
-        console.warn('Do not set both name and avatar!');
-    }
-
     const { me, others } = useOnlineCursor({
         presenceURL,
         presenceAuthEndpoint,

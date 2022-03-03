@@ -1,0 +1,5 @@
+@import './base.css';
+
+.online-cursor-wrapper__tail-box {
+    background-color: #f28e16;
+}

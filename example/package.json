@@ -15,7 +15,7 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@yomo/react-cursor-chat": "^0.1.3",
+    "@yomo/react-cursor-chat": "^0.1.4",
     "next": "12.0.7",
     "next-auth": "^4.0.2",
     "react": "17.0.2",

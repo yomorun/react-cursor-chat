@@ -25,28 +25,31 @@ const OthersCursor = ({
             <div className="online-cursor-wrapper__cursor" ref={refContainer}>
                 <CursorIcon color={cursor.color} />
                 <Latency cursor={cursor} showLatency={showLatency} />
-                {cursor.avatar ? (
-                    <img
-                        className="online-cursor-wrapper__avatar"
-                        src={cursor.avatar}
-                        alt="avatar"
-                    />
-                ) : cursor.name && !cursor.avatar && !msg ? (
-                    <span className="online-cursor-wrapper__name">
-                        {cursor.name}
-                    </span>
-                ) : null}
-                {msg && (
-                    <div
-                        className="online-cursor-wrapper__text"
-                        style={{
-                            paddingLeft:
-                                cursor.name && !cursor.avatar && msg ? 10 : 40,
-                        }}
-                    >
-                        {msg}
+
+                <div
+                    className="online-cursor-wrapper__tail-box"
+                    style={{
+                        borderBottomLeftRadius: msg ? 30 : 15,
+                    }}
+                >
+                    <div className="online-cursor-wrapper__user">
+                        {cursor.avatar && (
+                            <img
+                                className="online-cursor-wrapper__avatar"
+                                src={cursor.avatar}
+                                alt="avatar"
+                            />
+                        )}
+                        {cursor.name && (
+                            <span className="online-cursor-wrapper__name">
+                                {cursor.name}
+                            </span>
+                        )}
                     </div>
-                )}
+                    {msg && (
+                        <div className="online-cursor-wrapper__text">{msg}</div>
+                    )}
+                </div>
             </div>
         ),
         [msg, showLatency]
