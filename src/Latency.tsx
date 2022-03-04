@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Me from './cursor/me';
 import Others from './cursor/others';
+import flag from './helper/flag';
 
 const Latency = ({
     cursor,
@@ -48,12 +49,14 @@ const Latency = ({
     }
 
     return (
-        <div className="online-cursor-wrapper__latency">
-            📍 {latencyData.meshId}{' '}
+        <div className="online-cursor-wrapper__latency-box">
+            <span className="online-cursor-wrapper__meshId">
+                {flag(latencyData.meshId)} {latencyData.meshId}
+            </span>
             <span
+                className="online-cursor-wrapper__latency"
                 style={{
                     backgroundColor: latencyData.backgroundColor,
-                    color: '#fff',
                 }}
             >
                 {latencyData.latency}ms

@@ -24,8 +24,8 @@ module.exports = {
                     postcssImport(),
                 ],
                 inject: false,
-                include: '**/dark.css',
-                extract: 'dark.css',
+                include: '**/hairy-green.css',
+                extract: 'hairy-green.css',
             })
         );
         config.plugins.push(
@@ -38,8 +38,8 @@ module.exports = {
                     postcssImport(),
                 ],
                 inject: false,
-                include: '**/light.css',
-                extract: 'light.css',
+                include: '**/apricot-yellow.css',
+                extract: 'apricot-yellow.css',
             })
         );
         return config;
