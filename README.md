@@ -279,14 +279,6 @@ const YourComponent = ({
 };
 ```
 
-## Run example
-
-```sh
-cd react-cursor-chat/example
-npm i
-npm run dev
-```
-
 ## LICENSE
 
 <a href="/LICENSE" target="_blank">
