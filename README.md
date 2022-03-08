@@ -93,11 +93,11 @@ ReactDOM.render(<App />, document.getElementById('root'));
     </div>
 </div>
 
-## Theme Colors
-<div style="display:flex, flex-direction:columns">
- <span style="font-size:14px, color:#38bdf8">Here are the cursor theme color you may come across with once you run react cursor chat.</span>
+### Theme Colors
+<div style="display:flex;">
+  Here are the cursor theme color you may come across with once you run react cursor chat.
  <div>
-   <img src="themeColor.png" width="500px" height="900px" />
+   <img src="themeColor.png" width="500px" height="900px" alt="yomo react-cursor-chat theme colors " />
  </div>
 </div>
 
