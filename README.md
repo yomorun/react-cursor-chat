@@ -93,6 +93,14 @@ ReactDOM.render(<App />, document.getElementById('root'));
     </div>
 </div>
 
+## Theme Colors
+<div style="display:flex, flex-direction:columns">
+ <span style="font-size:14px, color:#38bdf8">Here are the cursor theme color you may come across with once you run react cursor chat.</span>
+ <div>
+   <img src="themeColor.png" width="500px" height="900px" />
+ </div>
+</div>
+
 ### add `/api/auth.js`
 
 ```javascript
@@ -253,9 +261,4 @@ npm run dev
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" />
 </a>
 
-<div style="display:flex, flex-direction:columns">
- <span style="font-size:14px, color:#38bdf8">Here are the cursor theme color you may come across with once you run react cursor chat.</span>
- <div>
-   <img src="themeColor.png" width="500px" height="900px" />
- </div>
-</div>
+
