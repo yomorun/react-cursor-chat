@@ -82,17 +82,20 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ### Theme Style
 
-There are two bulit-in styles in Cursor-chat component:`apricot-yellow` and `hairy-green`,you should import one of them to use in your web application .
-The default style is `hairy-green`,like the following
+There are two bulit-in styles in `CursorChat` component:`apricot-yellow` and `hairy-green`, you should import one of them to use in your web application. 
+The default style is `hairy-green`:
+
 <div style="display:flex;">
-    <div>hairy-green</div>
+    <div><b>hairy-green</b></div>
     <img src="https://github.com/yomorun/react-cursor-chat/raw/main/hairy-green.png" width="200px"  alt="yomo react-cursor-chat hairy-green" />
  </div>
 
-If you want to change to the `apricot-yellow`,delete `//` before `import '@yomo/react-cursor-chat/dist/apricot-yellow.css';` and commented out `import '@yomo/react-cursor-chat/dist/hairy-green.css';`.
-You can only choose one of them.Then you can see the style as follow:
+If you want to change to the `apricot-yellow`, delete `//` before `import '@yomo/react-cursor-chat/dist/apricot-yellow.css';` and comment out `import '@yomo/react-cursor-chat/dist/hairy-green.css';`.
+
+You can only choose one of them. Then you can see:
+
 <div style="display:flex;">
-    <div>apricot-yellow</div>
+    <div><b>apricot-yellow</b></div>
     <img src="https://github.com/yomorun/react-cursor-chat/raw/main/apricot-yellow.png" width="200px"  alt="yomo react-cursor-chat apricot-yellow" />
  </div>
 
@@ -204,10 +207,12 @@ ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 And then the style will like this:
+
 <img alt='hairy-green' src='/hairy-green.png'/>
 
-If you want to change to the `apricot-yellow`,delete `//` before `import '@yomo/react-cursor-chat/dist/apricot-yellow.css';` and add `//`before `import '@yomo/react-cursor-chat/dist/hairy-green.css';`.You can only choose one of them.Then you can see the style as follow:
-<img alt='apricot-yellow' src='/apricot-yellow'/>
+If you want to change to the `apricot-yellow`, delete `//` before `import '@yomo/react-cursor-chat/dist/apricot-yellow.css';` and add `//` before `import '@yomo/react-cursor-chat/dist/hairy-green.css';`. You can only choose one of them. Then you can get:
+
+<img alt='apricot-yellow' src='/apricot-yellow.png'/>
 
 ### Use hooks to customize the component:
 
