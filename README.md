@@ -100,6 +100,14 @@ You can only choose one of them. Then you can see:
  </div>
 
 
+### Theme Colors
+<div style="display:flex; flex-direction:columns">
+  <span>Here are the cursor theme colors you may come across with once you run react cursor chat.</span>
+ <div>
+   <img src="themeColor.png" width="500px" height="900px" style="object-fit:contain" alt="yomo react-cursor-chat theme colors " />
+ </div>
+</div>
+
 ### add `/api/auth.js`
 
 ```javascript
@@ -289,3 +297,5 @@ const YourComponent = ({
 <a href="/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" />
 </a>
+
+
