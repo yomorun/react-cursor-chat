@@ -100,11 +100,29 @@ You can only choose one of them. Then you can see:
  </div>
 
 
-### Theme Colors
-<div style="display:flex; flex-direction:columns">
-  <span>Here are the cursor theme colors you may come across with once you run react cursor chat.</span>
+### Dracula Theme Colors
+<div style="display:flex;">
+
+   There is built-in style  `draculaColor` which gives different cursor chat colors when it comes to running react-cursor-chat.
+
+   We suggest you import `draculaColor` to your website for a better performance and it also solves 
+   some issues with website background color.It may not be user friendly if react-cursor-chat color matches with your website
+    background color and your users must get confused with.
+
+
+   Integrate these codes bellow to your website:
+    
+  ```javascript 
+  import CursorChat from '@yomo/react-cursor-chat';
+// Import theme styles
+// import '@yomo/react-cursor-chat/dist/apricot-yellow.css';
+// import '@yomo/react-cursor-chat/dist/hairy-green.css';
+   import '@yomo/react-cursor-chat/dist/draculaColor.css'
+   ```
+
+   Here are the react-cursor-chat theme colors you could have :
  <div>
-   <img src="themeColor.png" width="100%" style="object-fit:contain" alt="yomo react-cursor-chat theme colors " />
+   <img src="themeColor.png" width="100%" height="100%" style="object-fit:contain" alt="yomo react-cursor-chat theme colors " />
  </div>
 </div>
 
