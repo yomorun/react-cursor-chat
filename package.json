@@ -1,6 +1,6 @@
 {
   "name": "@yomo/react-cursor-chat",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A react component helps bring Figma's Cursor Chat to your web applications in less than 3 minutes, making real-time collaboration anywhere. based on Presencejs.",
   "keywords": [
     "CursorChat",
