@@ -46,16 +46,18 @@ module.exports = {
             postcss({
                 plugins: [
                     autoprefixer(),
-                    cssnano({
-                        preset: 'default',
+                    cssnano ({
+                        preset:'default'
                     }),
-                    postcssImport(),
+                    postcssImport()
+                    
                 ],
                 inject: false,
                 include: '**/dracula.css',
-                extract: 'dracula.css',
+                extract:'dracula.css'
             })
-        );
+        )
+
         return config;
     },
 };
