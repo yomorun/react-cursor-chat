@@ -4,7 +4,7 @@ import OthersCursor from './OthersCursor';
 import MeCursor from './MeCursor';
 import './styles/hairy-green.css';
 import './styles/apricot-yellow.css';
-import './styles/dracula.css';
+import './styles/dracula.css'
 
 const CursorChat = ({
     presenceURL,
