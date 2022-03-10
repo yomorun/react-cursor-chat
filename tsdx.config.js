@@ -42,6 +42,20 @@ module.exports = {
                 extract: 'apricot-yellow.css',
             })
         );
+        config.plugins.push(
+            postcss({
+                plugins: [
+                    autoprefixer(),
+                    cssnano({
+                        preset: 'default',
+                    }),
+                    postcssImport(),
+                ],
+                inject: false,
+                include: '**/dracula.css',
+                extract: 'dracula.css',
+            })
+        );
         return config;
     },
 };
