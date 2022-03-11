@@ -3,7 +3,6 @@ const postcss = require('rollup-plugin-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const postcssImport = require('postcss-import');
-const prettier = require('prettier')
 
 module.exports = {
     rollup(config, options) {
@@ -48,23 +47,13 @@ module.exports = {
                 plugins: [
                     autoprefixer(),
                     cssnano ({
-                        preset:'default'
+                        preset: 'default'
                     }),
-                    postcssImport(),
-                    prettier({
-                        printWidth: 80,
-                        trailingComma: 'es5',
-                        singleQuote: true,
-                        parser: 'typescript',
-                        semi: false,
-                        tabWidth: 4,
-                        useTabs: false,
-
-                    }) 
+                    postcssImport(), 
                 ],
                 inject: false,
                 include: '**/dracula.css',
-                extract:'dracula.css'
+                extract: 'dracula.css',
             })
         )
 
