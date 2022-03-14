@@ -43,14 +43,16 @@ $ pnpm i @yomo/react-cursor-chat
 
 ### Request free dev/test account
 
-Login with your Github account on `https://presencejs.yomo.run`, will get a free `app_id` and `app_secret`
+Login with your Github account on `https://presencejs.yomo.run`, you will get a free `app_id` and `app_secret`.
 
-then, add `.env.local` like:
+Then, create a file named `.env.local` and add the following in it:
 
 ```bash
 APP_ID="abrHlqtooFakeID"
 APP_SECRET="nFJqSVzQyhbVgdsBeBojoeJTooFakeSecret"
 ```
+
+**Note** - Don't copy the `app_id` and `app_secret` examples mentioned above. Replace it with the one that you will see on your screen. 
 
 ### Integrate to your project
 
@@ -83,9 +85,9 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ### Theme Style
 
-If react-cursor-chat color matches with your website background color and your users must get confused with.
+If react-cursor-chat color matches with your website background color, your users might get confused with it.
 
-There are built-in styles in the `@yomo/react-cursor-chat` component: **`apricot-yellow`** and **`hairy-green`**, you should import one of them to use in your web application.
+There are built-in styles in the `@yomo/react-cursor-chat` component: **`apricot-yellow`** and **`hairy-green`**. You should import one of them to use in your web application.
 
 **`hairy-green`**
 <img src="https://github.com/yomorun/react-cursor-chat/raw/main/hairy-green.png" width="200px"  alt="yomo react-cursor-chat hairy-green" />
