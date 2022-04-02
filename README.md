@@ -43,7 +43,7 @@ $ pnpm i @yomo/react-cursor-chat
 
 ### Request free dev/test account
 
-Login with your Github account on `https://presencejs.yomo.run`, you will get a free `app_id` and `app_secret`.
+Login with your Github account on `https://presencejs.yomo.run`, and you will get a free `app_id` and `app_secret`.
 
 Then, create a file named `.env.local` and add the following in it:
 
