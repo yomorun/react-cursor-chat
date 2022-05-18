@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { filter } from 'rxjs/operators';
 import Presence from '@yomo/presencejs';
 import Me from '../cursor/me';
-import Others from '../cursor/others';
+import Other from '../cursor/other';
 import { uuidv4 } from '../helper';
 import { CursorMessage, OfflineMessage } from '../types';
 
@@ -20,8 +20,8 @@ const useOnlineCursor = ({
     avatar?: string;
 }) => {
     const [me, setMe] = useState<Me | null>(null);
-    const [othersMap, setOthersMap] = useState<Map<string, Others>>(
-        new Map<string, Others>()
+    const [othersMap, setOthersMap] = useState<Map<string, Other>>(
+        new Map<string, Other>()
     );
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const useOnlineCursor = ({
                             return old;
                         }
                         const cursorMap = new Map(old);
-                        const others = new Others(data);
+                        const others = new Other(data);
                         others.goOnline(yomo);
                         cursorMap.set(others.id, others);
                         return cursorMap;
@@ -86,7 +86,7 @@ const useOnlineCursor = ({
                             return old;
                         }
                         const cursorMap = new Map(old);
-                        const others = new Others(data);
+                        const others = new Other(data);
                         others.goOnline(yomo);
                         cursorMap.set(others.id, others);
                         return cursorMap;
@@ -111,7 +111,7 @@ const useOnlineCursor = ({
         };
     }, [room]);
 
-    const others: Others[] = [];
+    const others: Other[] = [];
 
     othersMap.forEach(value => {
         others.push(value);

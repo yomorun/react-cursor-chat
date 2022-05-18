@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import useOnlineCursor from './hooks/useOnlineCursor';
-import OthersCursor from './OthersCursor';
+import OtherCursors from './OtherCursors';
 import MeCursor from './MeCursor';
 import './styles/hairy-green.css';
 import './styles/apricot-yellow.css';
@@ -35,13 +35,7 @@ const CursorChat = ({
 
     return (
         <div className="online-cursor-wrapper">
-            {others.map(item => (
-                <OthersCursor
-                    key={item.id}
-                    cursor={item}
-                    showLatency={showLatency}
-                />
-            ))}
+            <OtherCursors others={others} showLatency={showLatency} />
             <MeCursor cursor={me} showLatency={showLatency} />
         </div>
     );
