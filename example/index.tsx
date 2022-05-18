@@ -15,6 +15,7 @@ const App = () => {
                 showLatency
                 presenceURL="https://prsc.yomo.dev"
                 presenceAuthEndpoint="/.netlify/functions/presence-auth"
+                avatar="https://cursor-chat-example.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75"
                 room="cursor-chat-example"
                 name="name"
             />

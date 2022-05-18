@@ -32,9 +32,11 @@ export default class Me extends Cursor {
         const onlineSubscription = this.subscribeOnline(yomo);
         const mousePositionSubscription = this.subscribeMousePosition(yomo);
         const latencySubscription = super.subscribeLatency(yomo);
+        const visibilitySubscription = this.subscribeVisibility(yomo);
         this.subscription.add(onlineSubscription);
         this.subscription.add(mousePositionSubscription);
         this.subscription.add(latencySubscription);
+        this.subscription.add(visibilitySubscription)
     }
 
     async goOffline() {
@@ -114,5 +116,28 @@ export default class Me extends Cursor {
         return movement$.subscribe(data => {
             yomo.send('movement', data);
         });
+    }
+
+    private subscribeVisibility(yomo: Presence) {
+        const visibilityChange$ = fromEvent<MouseEvent>(
+            document,
+            'visibilitychange'
+        );
+
+        return visibilityChange$
+            .pipe(
+                map(() => {
+                    let event: 'leave' | 'enter';
+                    if (document.hidden) event = 'leave';
+                    else event = 'enter';
+                    return {
+                        id: this.id,
+                        event,
+                    };
+                })
+            )
+            .subscribe(({ event, id}) => {
+                yomo.send(event, { id });
+            });
     }
 }

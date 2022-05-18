@@ -5,7 +5,7 @@ import Cursor from './cursor';
 import { getMousePosition } from '../helper';
 import { MovementMessage, TextMessage } from '../types';
 
-export default class Others extends Cursor {
+export default class Other extends Cursor {
     private subscription: Subscription | undefined;
 
     constructor({
@@ -28,8 +28,12 @@ export default class Others extends Cursor {
         this.subscription = this.subscribeMovement(yomo);
         const textMessageSubscription = this.subscribeTextMessage(yomo);
         const latencySubscription = super.subscribeLatency(yomo);
+        const leaveSubscription = this.subscribeLeave(yomo);
+        const enterSubscription = this.subscribeEnter(yomo);
         this.subscription.add(textMessageSubscription);
         this.subscription.add(latencySubscription);
+        this.subscription.add(leaveSubscription);
+        this.subscription.add(enterSubscription);
     }
 
     unsubscribe() {
@@ -60,5 +64,31 @@ export default class Others extends Cursor {
                 super.move(mouseX, mouseY);
                 this.onMove({ mouseX, mouseY });
             });
+    }
+
+    private subscribeLeave(yomo: Presence) {
+        return yomo
+            .on$<MovementMessage>('leave')
+            .pipe(filter(data => data.id === this.id))
+            .subscribe(() => {
+                this.onLeave();
+            });
+    }
+
+    private subscribeEnter(yomo: Presence) {
+        return yomo
+            .on$<MovementMessage>('enter')
+            .pipe(filter(data => data.id === this.id))
+            .subscribe(() => {
+                this.onEnter();
+            });
+    }
+
+    onLeave() {
+        throw new Error('Method not implemented.');
+    }
+
+    onEnter() {
+        throw new Error('Method not implemented.');
     }
 }

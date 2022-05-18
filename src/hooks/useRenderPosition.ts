@@ -1,18 +1,15 @@
-import { useEffect, useRef } from 'react';
-import Others from '../cursor/others';
+import { RefObject, useEffect, useRef } from 'react';
+import Other from '../cursor/other';
 import Me from '../cursor/me';
 import { MousePosition } from '../types';
 
-const useRenderPosition = (cursor: Me | Others) => {
-    const refContainer = useRef<HTMLDivElement>(null);
+const useRenderPosition = (cursor: Me | Other, refContainer?: RefObject<HTMLDivElement>) => {
+    const finaliRefContainer = refContainer || useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const renderPosition = (position: MousePosition) => {
-            if (refContainer.current) {
-                refContainer.current.setAttribute(
-                    'style',
-                    `transform: translate3d(${position.mouseX}px, ${position.mouseY}px, 0);`
-                );
+            if (finaliRefContainer.current) {
+                finaliRefContainer.current.style.setProperty('transform', `translate3d(${position.mouseX}px, ${position.mouseY}px, 0)`);
             }
         };
 
@@ -23,7 +20,7 @@ const useRenderPosition = (cursor: Me | Others) => {
         };
     }, [cursor]);
 
-    return refContainer;
+    return finaliRefContainer;
 };
 
 export default useRenderPosition;
