@@ -20,7 +20,7 @@ const useOnlineCursor = ({
     avatar?: string;
 }) => {
     const [me, setMe] = useState<Me | null>(null);
-    const [othersMap, setOthersMap] = useState<Map<string, Other>>(
+    const [otherMap, setOtherMap] = useState<Map<string, Other>>(
         new Map<string, Other>()
     );
 
@@ -52,43 +52,43 @@ const useOnlineCursor = ({
             yomo.on$<CursorMessage>('online')
                 .pipe(filter(data => data.id !== ID))
                 .subscribe(data => {
-                    setOthersMap(old => {
+                    setOtherMap(old => {
                         if (old.has(data.id)) {
                             return old;
                         }
                         const cursorMap = new Map(old);
-                        const others = new Other(data);
-                        others.goOnline(yomo);
-                        cursorMap.set(others.id, others);
+                        const other = new Other(data);
+                        other.goOnline(yomo);
+                        cursorMap.set(other.id, other);
                         return cursorMap;
                     });
                 });
 
             yomo.on<OfflineMessage>('offline', data => {
-                setOthersMap(old => {
+                setOtherMap(old => {
                     const cursorMap = new Map(old);
-                    const others = cursorMap.get(data.id);
-                    if (others) {
-                        others.unsubscribe();
+                    const other = cursorMap.get(data.id);
+                    if (other) {
+                        other.unsubscribe();
                     }
                     cursorMap.delete(data.id);
                     return cursorMap;
                 });
             });
 
-            // Answer server query, when others others go online, server will ask otherss' states,
+            // Answer server query, when other other go online, server will ask others states,
             // this is the response
             yomo.on$<CursorMessage>('sync')
                 .pipe(filter(data => data.id !== ID))
                 .subscribe(data => {
-                    setOthersMap(old => {
+                    setOtherMap(old => {
                         if (old.has(data.id)) {
                             return old;
                         }
                         const cursorMap = new Map(old);
-                        const others = new Other(data);
-                        others.goOnline(yomo);
-                        cursorMap.set(others.id, others);
+                        const other = new Other(data);
+                        other.goOnline(yomo);
+                        cursorMap.set(other.id, other);
                         return cursorMap;
                     });
                 });
@@ -113,7 +113,7 @@ const useOnlineCursor = ({
 
     const others: Other[] = [];
 
-    othersMap.forEach(value => {
+    otherMap.forEach(value => {
         others.push(value);
     });
 

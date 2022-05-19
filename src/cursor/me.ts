@@ -131,13 +131,12 @@ export default class Me extends Cursor {
                     if (document.hidden) event = 'leave';
                     else event = 'enter';
                     return {
-                        id: this.id,
-                        event,
+                        event
                     };
                 })
             )
-            .subscribe(({ event, id}) => {
-                yomo.send(event, { id });
+            .subscribe(({ event }) => {
+                yomo.send(event, { id: this.id });
             });
     }
 }

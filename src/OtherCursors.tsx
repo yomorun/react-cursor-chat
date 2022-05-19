@@ -1,6 +1,6 @@
 import React from 'react';
 import Others from './cursor/other';
-import OthersCursor from './OtherCursor';
+import OtherCursor from './OtherCursor';
 
 const OthersCursors = ({
     others,
@@ -12,7 +12,7 @@ const OthersCursors = ({
     return (
         <>
             {others.map(item => (
-                <OthersCursor
+                <OtherCursor
                     key={item.id}
                     cursor={item}
                     showLatency={showLatency}
