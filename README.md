@@ -108,11 +108,11 @@ Of course you can also override `online-cursor-wrapper__tail-box` , e.g.
 }
 ```
 
-Here are the react-cursor-chat colors you could have :
+Here you are the react-cursor-chat pallete colors :
 
-<p>
+<div>
     <img src="themeColor.png" width="100%" height="100%" style="object-fit:contain" alt="yomo react-cursor-chat theme colors " />
-</p>
+</div>
 
 ### add `/api/auth.js`
 

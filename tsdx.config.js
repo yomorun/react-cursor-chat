@@ -6,7 +6,7 @@ const postcssImport = require('postcss-import');
 
 module.exports = {
     rollup(config, options) {
-        config.plugins = config.plugins.map(p =>
+        config.plugins = config.plugins.map((p) =>
             p.name === 'replace'
                 ? replace({
                       'process.env.NODE_ENV': JSON.stringify(options.env),
@@ -56,6 +56,7 @@ module.exports = {
                 extract: 'dracula.css',
             })
         );
+
         return config;
     },
 };
