@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Me from './cursor/me';
-import Others from './cursor/others';
+import Other from './cursor/other';
 import flag from './helper/flag';
 
 const Latency = ({
     cursor,
     showLatency,
 }: {
-    cursor: Me | Others;
+    cursor: Me | Other;
     showLatency: boolean;
 }) => {
     const [latencyData, setLatencyData] = useState({

@@ -1,17 +1,19 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Others from './cursor/others';
+import Other from './cursor/other';
 import CursorIcon from './CursorIcon';
 import Latency from './Latency';
 import useRenderPosition from './hooks/useRenderPosition';
+import useRenderOpacity from './hooks/useRenderOpacity';
 
-const OthersCursor = ({
+const OtherCursor = ({
     cursor,
     showLatency,
 }: {
-    cursor: Others;
+    cursor: Other;
     showLatency: boolean;
 }) => {
     const refContainer = useRenderPosition(cursor);
+    useRenderOpacity(cursor, refContainer);
     const [msg, setMsg] = useState('');
 
     useEffect(() => {
@@ -56,4 +58,4 @@ const OthersCursor = ({
     );
 };
 
-export default OthersCursor;
+export default OtherCursor;
