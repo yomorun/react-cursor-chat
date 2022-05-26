@@ -12,12 +12,14 @@ const useOnlineCursor = ({
     room,
     name,
     avatar,
+    color,
 }: {
     presenceURL: string;
     presenceAuthEndpoint: string;
     room?: string;
     name?: string;
     avatar?: string;
+    color?: string;
 }) => {
     const [me, setMe] = useState<Me | null>(null);
     const [otherMap, setOtherMap] = useState<Map<string, Other>>(
@@ -33,6 +35,7 @@ const useOnlineCursor = ({
             y: 0,
             name: name || '',
             avatar: avatar || '',
+            color: color || '',
         });
 
         setMe(me);
@@ -116,6 +119,8 @@ const useOnlineCursor = ({
     otherMap.forEach(value => {
         others.push(value);
     });
+
+    console.log('mmmmmmmmmmmmmmmm', me);
 
     return { me, others };
 };

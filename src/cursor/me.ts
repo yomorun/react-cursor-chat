@@ -15,14 +15,16 @@ export default class Me extends Cursor {
         y,
         name = '',
         avatar = '',
+        color = '',
     }: {
         id: string;
         x: number;
         y: number;
         name?: string;
         avatar?: string;
+        color: string;
     }) {
-        super(id, x, y, name, avatar);
+        super(id, x, y, name, avatar, color);
         this.subscription = this.subscribeMousemove();
     }
 
@@ -36,7 +38,7 @@ export default class Me extends Cursor {
         this.subscription.add(onlineSubscription);
         this.subscription.add(mousePositionSubscription);
         this.subscription.add(latencySubscription);
-        this.subscription.add(visibilitySubscription)
+        this.subscription.add(visibilitySubscription);
     }
 
     async goOffline() {
@@ -71,6 +73,7 @@ export default class Me extends Cursor {
             y: 0,
             name: this.name,
             avatar: this.avatar,
+            color: this.color,
         });
     }
 
@@ -82,6 +85,7 @@ export default class Me extends Cursor {
                 y: this.y,
                 name: this.name,
                 avatar: this.avatar,
+                color: this.color,
             });
         });
     }
@@ -131,7 +135,7 @@ export default class Me extends Cursor {
                     if (document.hidden) event = 'leave';
                     else event = 'enter';
                     return {
-                        event
+                        event,
                     };
                 })
             )
