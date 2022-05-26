@@ -120,8 +120,6 @@ const useOnlineCursor = ({
         others.push(value);
     });
 
-    console.log('mmmmmmmmmmmmmmmm', me);
-
     return { me, others };
 };
 
