@@ -2,8 +2,6 @@ import React, { memo } from 'react';
 import useOnlineCursor from './hooks/useOnlineCursor';
 import OtherCursors from './OtherCursors';
 import MeCursor from './MeCursor';
-import './styles/hairy-green.css';
-import './styles/apricot-yellow.css';
 import './styles/dracula.css';
 
 const CursorChat = ({
@@ -13,6 +11,7 @@ const CursorChat = ({
     showLatency = false,
     name,
     avatar,
+    colors = ['#604CFF', '#FF0BC6', '#00C0ED', '#FFAB24', '#F52768'],
 }: {
     presenceURL: string;
     presenceAuthEndpoint: string;
@@ -20,6 +19,7 @@ const CursorChat = ({
     showLatency?: boolean;
     name?: string;
     avatar?: string;
+    colors?: Array<string>;
 }): JSX.Element | null => {
     const { me, others } = useOnlineCursor({
         presenceURL,
@@ -27,6 +27,7 @@ const CursorChat = ({
         room,
         name,
         avatar,
+        color: `${colors[Math.floor(Math.random() * colors.length)]}`,
     });
 
     if (!me) {

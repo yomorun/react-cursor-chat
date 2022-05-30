@@ -12,12 +12,13 @@ const App = () => {
                 <span>ESC</span> to close the input box
             </p>
             <CursorChat
-                showLatency
+                showLatency={true}
                 presenceURL="https://prsc.yomo.dev"
                 presenceAuthEndpoint="/.netlify/functions/presence-auth"
-                avatar="https://cursor-chat-example.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75"
+                avatar="https://s3.bmp.ovh/imgs/2022/05/25/7a27bbdcae90a11f.png"
                 room="cursor-chat-example"
                 name="name"
+                // colors={['black','white','grey'......]}
             />
         </div>
     );

@@ -4,6 +4,7 @@ export type CursorMessage = {
     y: number;
     name?: string;
     avatar?: string;
+    color: string;
 };
 
 export type MovementMessage = {

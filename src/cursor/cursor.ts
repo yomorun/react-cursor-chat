@@ -1,5 +1,4 @@
 import Presence from '@yomo/presencejs';
-import { stringToColor } from '../helper';
 import { Latency, MousePosition } from '../types';
 
 export default class Cursor {
@@ -15,14 +14,15 @@ export default class Cursor {
         x: number,
         y: number,
         name: string,
-        avatar: string
+        avatar: string,
+        color: string
     ) {
         this.id = id;
         this.x = x;
         this.y = y;
         this.name = name;
         this.avatar = avatar;
-        this.color = stringToColor(id);
+        this.color = color;
     }
 
     move(x: number, y: number) {

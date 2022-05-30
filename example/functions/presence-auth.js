@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-exports.handler = async function (event, context) {
+exports.handler = async function(event, context) {
     if (event.httpMethod === 'GET') {
         try {
             const response = await fetch('https://prsc.yomo.dev/api/v1/auth', {

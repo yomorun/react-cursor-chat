@@ -14,14 +14,16 @@ export default class Other extends Cursor {
         y,
         name = '',
         avatar = '',
+        color = '',
     }: {
         id: string;
         x: number;
         y: number;
         name?: string;
         avatar?: string;
+        color: string;
     }) {
-        super(id, x, y, name, avatar);
+        super(id, x, y, name, avatar, color);
     }
 
     goOnline(yomo: Presence) {

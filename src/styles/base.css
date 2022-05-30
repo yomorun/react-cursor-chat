@@ -19,65 +19,56 @@
 }
 
 .online-cursor-wrapper__latency-box {
-    position: absolute;
-    top: -10px;
-    left: 32px;
     color: #fff;
     font-size: 12px;
-}
-
-.online-cursor-wrapper__meshId {
-    margin-left: 2px;
-    padding: 1px 5px;
-    border-radius: 5px;
-    background-color: black;
-}
-
-.online-cursor-wrapper__latency {
-    margin-left: 2px;
-    padding: 1px 5px;
-    border-radius: 5px;
-    background-color: green;
+    margin-top: 2px;
 }
 
 .online-cursor-wrapper__tail-box {
     position: absolute;
-    top: 10px;
-    left: 32px;
+    top: 16px;
+    left: 16px;
     min-height: 30px;
-    border-radius: 0 10px 10px 15px;
     box-sizing: border-box;
-    padding: 5px 10px;
+    padding: 0px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 370px;
 }
 
 .online-cursor-wrapper__user {
     position: relative;
     display: flex;
     align-items: center;
+    margin-top: 3px;
 }
 
 .online-cursor-wrapper__avatar {
     position: relative;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
     margin-right: 5px;
+    margin-top: 1px;
 }
 
 .online-cursor-wrapper__name {
     position: relative;
-    font-size: 16px;
+    font-size: 15px;
     color: #fff;
+    text-align: center;
 }
 
 .online-cursor-wrapper__input-box {
     position: relative;
-    min-width: 150px;
+    min-width: 300px;
     height: 32px;
     border-radius: 8px;
     font-size: 16px;
     color: #fff;
     padding: 5px 0;
+    margin-left: 15px;
 }
 
 .online-cursor-wrapper__input-box > span {
@@ -116,4 +107,5 @@
     font-size: 16px;
     box-sizing: border-box;
     padding: 5px 0;
+    margin-left: 15px;
 }

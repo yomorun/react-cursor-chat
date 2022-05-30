@@ -26,12 +26,13 @@ const OtherCursor = ({
         () => (
             <div className="online-cursor-wrapper__cursor" ref={refContainer}>
                 <CursorIcon color={cursor.color} />
-                <Latency cursor={cursor} showLatency={showLatency} />
 
                 <div
                     className="online-cursor-wrapper__tail-box"
                     style={{
-                        borderBottomLeftRadius: msg ? 30 : 15,
+                        borderRadius: msg ? 35 : 15,
+                        borderTopLeftRadius: msg ? 10 : 15,
+                        backgroundColor: `${cursor.color}`,
                     }}
                 >
                     <div className="online-cursor-wrapper__user">
@@ -47,7 +48,16 @@ const OtherCursor = ({
                                 {cursor.name}
                             </span>
                         )}
+                        <Latency cursor={cursor} showLatency={showLatency} />
                     </div>
+                    <div
+                        style={{
+                            height: '1px',
+                            width: '100%',
+                            visibility: 'hidden',
+                            background: 'transparent',
+                        }}
+                    ></div>
                     {msg && (
                         <div className="online-cursor-wrapper__text">{msg}</div>
                     )}
